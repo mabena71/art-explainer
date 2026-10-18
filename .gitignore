@@ -1,0 +1,8 @@
+# Geheimnisse gehören nie ins Repo (Anthropic-Schlüssel, Supabase-Secrets)
+.env
+.env.*
+*.key
+supabase/.temp/
+.claude/
+Thumbs.db
+desktop.ini
