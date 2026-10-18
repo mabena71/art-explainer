@@ -5,6 +5,8 @@ Kunstwerk fotografieren → Claude erkennt Bild, Skulptur oder Bauwerk und erzä
 was sonst in jener Zeit geschah, Querverweise zum endlosen Weiterstöbern, Nachfragen-Chat, Vorlesen, Kinder-Modus
 und eine Sammlung aller entdeckten Werke.
 
+Online: https://mabena71.github.io/art-explainer/ (Demo: `?demo`)
+
 Offene Arbeiten und Ideen: [TODO.md](TODO.md)
 
 ## Aufbau
