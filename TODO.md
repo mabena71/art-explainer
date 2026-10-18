@@ -25,6 +25,7 @@ Plan: Foto von Bild oder Skulptur → Erkennung durch Claude → Erklärung, ver
 | 21 | Öffentlich machen | Registrierung, Limits, Kostenschutz, Datenschutz-Text | Claude + Maurice | Opus | 120 | niedrig | Idee | 7 |
 | 22 | Anthropic-Schlüssel erneuern | Schlüssel «art-explainer» läuft am 31.12.2027 ab; neuen erzeugen und Secret `ANTHROPIC_API_KEY` in bena-fit ersetzen | Maurice | — | 10 | niedrig | offen | — |
 | 23 | Eigenes Supabase-Projekt | Läuft vorerst in bena-fit mit (Tabellen `art_…`, Function-Slug `smooth-api`). Für «öffentlich» umziehen in eigenes Projekt | Claude + Maurice | Opus | 45 | niedrig | offen | 21 |
+| 24 | Installation auf Xiaomi/Poco | Chrome meldet «bereits installiert», öffnen schlägt fehl, kein Symbol; Berechtigung «Startbildschirm-Verknüpfungen» bei HyperOS nicht einstellbar. Zwischenlösung: Lesezeichen. Nächstes: Neustart, «Verknüpfung erstellen», sonst Ursache suchen (WebAPK) | Maurice + Claude | Opus | 20 | hoch | offen | — |
 
 ## Erledigt
 
