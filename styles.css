@@ -1,16 +1,16 @@
-/* Art Explainer – ruhig wie ein Museum: warmes Papierweiss, Serifen-Titel, Akzent in Siena-Rot und Gold. */
+/* Art Explainer – «Espresso und Terrakotta»: warmes Papier (hell) bzw. Espresso-Braun (dunkel), Serifen-Titel, Akzent Terrakotta, Gold als Funke. */
 :root {
-  --bg: #f6f2ea;
-  --surface: #fffdf8;
-  --surface-2: #ede6d9;
-  --text: #1c1917;
-  --muted: #6b625a;
-  --line: #e3dacb;
-  --accent: #a8402d;
+  --bg: #f2ebdd;
+  --surface: #fbf7ee;
+  --surface-2: #e6dcc8;
+  --text: #2b2218;
+  --muted: #6a5d4c;
+  --line: #dacfb8;
+  --accent: #a9532d;
   --accent-ink: #ffffff;
-  --accent-soft: #f3dfd7;
-  --gold: #b88a1b;
-  --gold-soft: #f4e9c8;
+  --accent-soft: #f0d9c9;
+  --gold: #8f650c;
+  --gold-soft: #f3e2b5;
   --bad: #b42318;
   --radius: 14px;
   --nav-h: 64px;
@@ -20,17 +20,17 @@
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #161412;
-    --surface: #211e1b;
-    --surface-2: #2c2824;
-    --text: #f2ede4;
-    --muted: #a99f93;
-    --line: #3a342e;
-    --accent: #e0745c;
-    --accent-ink: #1c1917;
-    --accent-soft: #3d2620;
-    --gold: #d9b14a;
-    --gold-soft: #3a3020;
+    --bg: #16110d;
+    --surface: #211a14;
+    --surface-2: #2c231b;
+    --text: #f2ebdd;
+    --muted: #b3a794;
+    --line: #3a2f24;
+    --accent: #d98558;
+    --accent-ink: #16110d;
+    --accent-soft: #3d2a1e;
+    --gold: #f0c874;
+    --gold-soft: #3a2d12;
     --bad: #f0796d;
     color-scheme: dark;
   }
@@ -303,7 +303,7 @@ details.fold:not([open]) { border-bottom: 1px solid var(--line); padding-bottom:
 .nearby-bar { margin-bottom: 10px; }
 .nearby-bar select { min-height: 44px; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 0 12px; }
 .museum-pin { display: grid; place-items: center; font-size: 16px; background: #fff; border: 2px solid var(--muted); border-radius: 50%; box-shadow: 0 1px 4px rgba(0,0,0,.3); }
-.museum-pin.art { border-color: #a8402d; }
+.museum-pin.art { border-color: var(--accent); }
 .near-list { list-style: none; padding: 0; margin: 0 0 8px; display: grid; gap: 8px; }
 .near-list li { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
 .near-list li .row { flex: none; }

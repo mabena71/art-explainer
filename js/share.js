@@ -1,6 +1,6 @@
 // Teilen als Bildkarte: Foto, Titel, Künstler und ein «Wusstest du?» als Bild (1080 × 1350, gut für WhatsApp und Instagram).
 const W = 1080, H = 1350, PAD = 72;
-const BG = '#f6f2ea', INK = '#1c1917', MUTED = '#6b625a', ACCENT = '#a8402d', GOLD = '#b88a1b';
+const BG = '#f2ebdd', INK = '#2b2218', MUTED = '#6a5d4c', ACCENT = '#a9532d', GOLD = '#8f650c';
 
 function wrap(ctx, text, maxWidth, maxLines) {
   const words = String(text || '').split(/\s+/);
