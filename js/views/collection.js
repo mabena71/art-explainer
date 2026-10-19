@@ -18,6 +18,10 @@ export default async function collection(el, { params }) {
       <div class="seg tabs" role="tablist">
         ${TABS.map(([k, l]) => `<a role="tab" href="#/sammlung?tab=${k}" class="${k === tab ? 'on' : ''}" aria-selected="${k === tab}">${l}</a>`).join('')}
       </div>
+      <div class="row more-links">
+        <a class="chip" href="#/quiz">${icon('quiz')} Quiz</a>
+        <a class="chip" href="#/karte">${icon('pin')} Karte</a>
+      </div>
       <div data-body></div>
     </div>`;
   const body = el.querySelector('[data-body]');

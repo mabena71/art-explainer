@@ -12,11 +12,6 @@ Plan: Foto von Bild oder Skulptur → Erkennung durch Claude → Erklärung, ver
 | 6 | Testscans im Museum | Sternennacht, Rodins Denker, Werk im Kunsthaus Zürich, unbekanntes Bild; Erkennung, Unsicherheit, Details-Punkte prüfen | Maurice | — | 30 | hoch | offen | — |
 | 8 | Audioguide mit ElevenLabs | Hörprobe 2–3 Stimmen, Kostenfreigabe, Function `speak` mit Zwischenspeicher (jetzt: Browser-Stimme) | Claude + Maurice | Opus | 60 | mittel | offen | — |
 | 9 | Design-Etappe | Farben, Logo/Symbol mit Maurice festlegen (Name steht: Art Explainer) | Maurice + Claude | Opus | 30 | mittel | offen | 1 |
-| 10 | Damals und heute | Früherer Zustand, Restaurierungen, Ortsgeschichte (über Stöbern) | Claude | Sonnet | 30 | mittel | Idee | — |
-| 12 | Rundgang-Vorschlag | «Dir gefiel X, schau dir als Nächstes Y an» innerhalb des Museums | Claude | Sonnet | 30 | mittel | Idee | — |
-| 14 | Vergleichen | Zwei Scans nebeneinander, Claude erklärt Unterschiede | Claude | Sonnet | 40 | mittel | Idee | — |
-| 15 | Quiz aus Sammlung | «Wer hat das gemalt?» mit eigenen Scans | Claude | Sonnet | 40 | niedrig | Idee | — |
-| 17 | Kunst-Karte | Scans auf Karte (Leaflet/OSM), Museen in der Nähe | Claude | Opus | 60 | niedrig | Idee | — |
 | 18 | Geschmacksprofil + Ausstellungstipps | Vorlieben aus der Sammlung, aktuelle Ausstellungen Schweiz (Claude mit Web-Suche) | Claude | Opus | 60 | niedrig | Idee | — |
 | 20 | Familien-Feed | Freiwillig geteilte Scans der Familie sehen | Claude | Opus | 60 | niedrig | Idee | 25 |
 | 21 | Öffentlich machen | Registrierung, Limits, Kostenschutz, Datenschutz-Text | Claude + Maurice | Opus | 120 | niedrig | Idee | — |
@@ -39,3 +34,8 @@ Plan: Foto von Bild oder Skulptur → Erkennung durch Claude → Erklärung, ver
 | E9 | Museums-Modus | Besuch starten/beenden, Scans gruppiert, Zusammenfassung mit Highlights von Claude, Reiter «Besuche» | Claude | Opus | 19.10.2026 |
 | E10 | Abzeichen | 12 Abzeichen mit Fortschritt, Meldung bei neuem Abzeichen, Reiter «Erfolge» | Claude | Opus | 19.10.2026 |
 | E11 | Teilen als Bildkarte | Foto, Titel, Fun Fact als PNG, Teilen-Menü (Handy) oder Download (PC) | Claude | Opus | 19.10.2026 |
+| E12 | Quiz | Bis 5 Fragen zu Künstler, Epoche, Entstehungszeit aus der eigenen Sammlung, Bestwert | Claude | Opus | 19.10.2026 |
+| E13 | Vergleichen | Zweites Werk wählen, Claude vergleicht (einmal pro Paar, auf dem Gerät gespeichert) | Claude | Opus | 19.10.2026 |
+| E14 | Kunst-Karte | Leaflet/OpenStreetMap, Standort beim Scannen nur nach Einwilligung, Fotos als Kartenpunkte (Museen in der Nähe noch offen) | Claude | Opus | 19.10.2026 |
+| E15 | Rundgang-Tipp | Während eines Besuchs: «Was als Nächstes?» schlägt passende Werke im gleichen Museum vor | Claude | Opus | 19.10.2026 |
+| E16 | Damals und heute | Erster Querverweis in jedem Werk führt zu einem Artikel über früher und heute | Claude | Opus | 19.10.2026 |

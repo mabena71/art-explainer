@@ -40,6 +40,7 @@ export default async function work(el, { args: [id] }) {
           ${voice.supported() ? `<button class="btn btn-small" data-read>${icon('play')}<span>Vorlesen</span></button>` : ''}
           <button class="btn btn-small btn-ghost ${scan.fav ? 'on' : ''}" data-fav aria-pressed="${scan.fav}">${icon('star')}<span>Favorit</span></button>
           <button class="btn btn-small btn-ghost" data-share>${icon('share')}<span>Teilen</span></button>
+          <a class="btn btn-small btn-ghost" href="#/vergleich?a=${scan.id}">${icon('compare')}<span>Vergleichen</span></a>
         </div>
         ${lengthSwitch()}
       </header>
@@ -70,7 +71,7 @@ export default async function work(el, { args: [id] }) {
       ${a.zeitleiste?.length ? fold('Was sonst geschah',
         `<ol class="timeline">${a.zeitleiste.map(t => `<li><span class="year">${esc(t.jahr)}</span><span>${esc(t.ereignis)}</span></li>`).join('')}</ol>`) : ''}
 
-      <section><h2>Weiterstöbern</h2>${linkCards(a.querverweise, a.titel)}</section>
+      <section><h2>Weiterstöbern</h2>${linkCards([{ art: 'thema', titel: `Damals und heute: ${a.titel}`, warum: 'Wie Werk und Ort früher aussahen, Restaurierungen, Ortsgeschichte' }, ...(a.querverweise || [])], a.titel)}</section>
 
       <section class="chat"><h2>Frag nach</h2>
         <div class="msgs" aria-live="polite"></div>

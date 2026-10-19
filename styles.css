@@ -272,3 +272,29 @@ details.fold:not([open]) { border-bottom: 1px solid var(--line); padding-bottom:
 .badge.done .emoji { filter: none; }
 .badge .bar { height: 6px; border-radius: 3px; background: var(--surface-2); overflow: hidden; margin-top: 4px; }
 .badge .bar span { display: block; height: 100%; background: var(--gold); }
+
+/* Quiz */
+.more-links { margin: -4px 0 14px; }
+.more-links .chip { text-decoration: none; color: inherit; }
+.quiz-img { width: 100%; max-height: 42vh; object-fit: contain; background: #0d0c0b; border-radius: var(--radius); margin: 8px 0; }
+.answers { display: grid; gap: 8px; }
+.answer { text-align: left; padding: 12px 16px; min-height: 48px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface); font-weight: 500; cursor: pointer; }
+.answer.right { background: #dcfce7; border-color: #15803d; color: #14532d; }
+@media (prefers-color-scheme: dark) { .answer.right { background: #14361f; color: #bbf7d0; } }
+.answer.wrong { background: var(--accent-soft); border-color: var(--bad); }
+.feedback { margin-top: 14px; font-weight: 600; }
+.feedback .btn { margin-top: 10px; }
+.score { font-family: var(--serif); font-size: 3rem; margin: 0; }
+.row.spread { justify-content: space-between; }
+
+/* Vergleichen */
+.pair { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: start; margin-bottom: 14px; }
+.pair-item { display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: inherit; min-width: 0; }
+.pair-item img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 10px; background: var(--surface-2); }
+.pair-item strong { font-family: var(--serif); line-height: 1.25; }
+.vs { align-self: center; font-family: var(--serif); color: var(--muted); font-style: italic; }
+
+/* Karte */
+.map { isolation: isolate; height: 60vh; min-height: 320px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); margin-bottom: 8px; background: var(--surface-2); }
+.map-pin img { box-sizing: border-box; display: block; width: 44px; height: 44px; object-fit: cover; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 2px 6px rgba(0,0,0,.35); }
+.tip-box { margin-top: 0; }

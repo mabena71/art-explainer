@@ -9,7 +9,7 @@ import { getClient } from './cloud.js';
 import { thumbFromBlob } from './photo.js';
 
 const BUCKET = 'art-photos';
-const COLUMNS = ['id', 'created_at', 'updated_at', 'deleted_at', 'photo_path', 'analysis', 'chat', 'note', 'fav', 'visit'];
+const COLUMNS = ['id', 'created_at', 'updated_at', 'deleted_at', 'photo_path', 'analysis', 'chat', 'note', 'fav', 'visit', 'lat', 'lng'];
 
 let running = null;
 let timer = null;

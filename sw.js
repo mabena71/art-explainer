@@ -1,12 +1,13 @@
 // Service Worker: Die App startet auch ohne Netz (Sammlung ansehen); Scannen braucht Internet.
 // Eigene Dateien: zuerst Netz (damit Updates sofort ankommen), sonst Cache.
 // Bibliotheken und Schriften vom CDN: zuerst Cache (Versionen sind fest).
-const CACHE = 'kunst-v3';
+const CACHE = 'kunst-v4';
 const SHELL = [
   './', 'index.html', 'styles.css', 'manifest.webmanifest',
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/favicon.png',
   'js/app.js', 'js/api.js', 'js/cloud.js', 'js/config.js', 'js/db.js', 'js/demo.js', 'js/icons.js',
   'js/photo.js', 'js/speak.js', 'js/state.js', 'js/ui.js', 'js/version.js', 'js/sync.js', 'js/visit.js', 'js/rewards.js', 'js/share.js',
+  'js/views/quiz.js', 'js/views/compare.js', 'js/views/map.js',
   'js/views/scan.js', 'js/views/work.js', 'js/views/explore.js', 'js/views/collection.js', 'js/views/settings.js', 'js/views/login.js', 'js/views/visit.js',
 ];
 
@@ -23,7 +24,7 @@ self.addEventListener('fetch', e => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   const sameOrigin = url.origin === self.location.origin;
-  const isCdn = ['cdn.jsdelivr.net', 'fonts.googleapis.com', 'fonts.gstatic.com'].includes(url.hostname);
+  const isCdn = ['cdnjs.cloudflare.com', 'cdn.jsdelivr.net', 'fonts.googleapis.com', 'fonts.gstatic.com'].includes(url.hostname);
   if (!sameOrigin && !isCdn) return; // z. B. Supabase: nie cachen
 
   if (isCdn) {

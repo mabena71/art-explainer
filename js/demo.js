@@ -62,6 +62,16 @@ export function demoArticle(titel, art) {
 }
 
 export function demoChat(frage, werk) {
+  if (werk?.werk_1) {
+    return { antwort: `Im Demo-Modus sind alle Werke die «Sternennacht» – ein Vergleich mit sich selbst ist eher kurz: Sie gleichen sich aufs Haar.
+
+Mit Claude verbunden steht hier ein spannender Vergleich: was die Werke überraschend verbindet, worin sie sich unterscheiden und worauf du beim Nebeneinander-Anschauen achten kannst.` };
+  }
+  if (werk?.rundgang) {
+    return { antwort: `Im Demo-Modus gibt es noch keine echten Tipps für «${werk.rundgang}».
+
+Mit Claude verbunden schlägt die App hier 2–3 Werke oder Räume vor, die zu dem passen, was du bisher gesehen und gemocht hast.` };
+  }
   if (werk?.museumsbesuch) {
     return { antwort: `Ein Besuch voller Nachthimmel: Im Demo-Modus erkennt die App jedes Foto als «Sternennacht» – darum sieht dein Besuch in «${werk.museumsbesuch}» etwas eintönig aus.
 

@@ -5,7 +5,9 @@ import { analyze } from '../api.js';
 import { prepare } from '../photo.js';
 import * as visit from '../visit.js';
 import { newBadges } from '../rewards.js';
-import { esc, uid, loadingText, toast } from '../ui.js';
+import { currentPosition } from './map.js';
+import * as api from '../api.js';
+import { esc, uid, loadingText, toast, paras } from '../ui.js';
 import { icon } from '../icons.js';
 
 const LOADING = [
@@ -30,8 +32,9 @@ export default async function scan(el) {
       ${v ? `
       <div class="visit-banner">
         <div><span class="muted small">Museumsbesuch läuft</span><br><strong>${esc(v.name)}</strong> · ${inVisit} ${inVisit === 1 ? 'Werk' : 'Werke'}</div>
-        <button class="btn btn-small btn-ghost" data-end>Beenden</button>
-      </div>` : ''}
+        <div class="row"><button class="btn btn-small btn-ghost" data-tip>${icon('sparkle')}<span>Was als Nächstes?</span></button><button class="btn btn-small btn-ghost" data-end>Beenden</button></div>
+      </div>
+      <div class="box tip-box" data-tipbox hidden></div>` : ''}
       <label class="btn btn-big">
         ${icon('camera')}<span>Kunstwerk fotografieren</span>
         <input type="file" accept="image/*" capture="environment" hidden data-pick>
@@ -71,6 +74,22 @@ export default async function scan(el) {
     toast(`Besuch «${started.name}» gestartet`);
     scan(el);
   });
+  // Rundgang-Tipp: was im gleichen Museum als Nächstes passen könnte
+  el.querySelector('[data-tip]')?.addEventListener('click', async e => {
+    const b = e.currentTarget, box = el.querySelector('[data-tipbox]');
+    b.disabled = true;
+    box.hidden = false;
+    box.innerHTML = '<p class="muted">Claude überlegt …</p>';
+    const seen = all.filter(s => s.visit?.id === v.id).map(s => ({ titel: s.analysis?.titel, kuenstler: s.analysis?.kuenstler, epoche: s.analysis?.epoche, favorit: !!s.fav }));
+    try {
+      const { antwort } = await api.chat({ rundgang: v.name, bisher_gesehen: seen }, [],
+        `Ich bin gerade im Museum «${v.name}». Was sollte ich mir als Nächstes ansehen? Schlage 2–3 konkrete Werke oder Räume vor, die es dort wirklich gibt und die zu dem passen, was ich bisher gesehen und gemocht habe. ` +
+        'Kurz, je ein Satz Begründung. Wenn du die Sammlung dieses Museums nicht sicher kennst, sag das und gib allgemeine Tipps.');
+      box.innerHTML = paras(antwort);
+    } catch (x) {
+      box.innerHTML = `<p class="bad">${esc(x.message || x)}</p>`;
+    } finally { b.disabled = false; }
+  });
   el.querySelector('[data-end]')?.addEventListener('click', () => {
     const ended = visit.endVisit();
     if (ended && inVisit) location.hash = `#/besuch/${ended.id}`;
@@ -89,7 +108,9 @@ export default async function scan(el) {
       const photo = await prepare(file);
       busy.querySelector('img').src = photo.thumb;
       stopText = loadingText(busy.querySelector('.busy-text'), LOADING);
+      const where = currentPosition(); // läuft parallel zur Analyse
       const analysis = await analyze(photo.base64);
+      const pos = await where;
       const id = uid();
       const current = visit.active();
       await db.putScan({
@@ -97,6 +118,7 @@ export default async function scan(el) {
         photo: photo.blob, thumb: photo.thumb, ratio: photo.ratio,
         analysis, chat: [], fav: false, note: '',
         visit: current ? { id: current.id, name: current.name } : null,
+        lat: pos?.lat ?? null, lng: pos?.lng ?? null,
       });
       for (const b of newBadges(all, await db.allScans())) toast(`${b.emoji} Neues Abzeichen: ${b.title}`);
       location.hash = `#/w/${id}`;

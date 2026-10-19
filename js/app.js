@@ -14,6 +14,9 @@ import collection from './views/collection.js';
 import settings from './views/settings.js';
 import login from './views/login.js';
 import visitView from './views/visit.js';
+import quiz from './views/quiz.js';
+import compare from './views/compare.js';
+import mapView from './views/map.js';
 
 const MODE_KEY = 'kunst.mode';
 
@@ -25,11 +28,14 @@ const routes = [
   [/^\/mehr$/, settings],
   [/^\/login$/, login],
   [/^\/besuch\/([^/]+)$/, visitView],
+  [/^\/quiz$/, quiz],
+  [/^\/vergleich$/, compare],
+  [/^\/karte$/, mapView],
 ];
 
 const NAV = [
   ['#/', 'camera', 'Scannen', /^\/($|w\/|explore)/],
-  ['#/sammlung', 'grid', 'Sammlung', /^\/(sammlung|besuch)/],
+  ['#/sammlung', 'grid', 'Sammlung', /^\/(sammlung|besuch|quiz|vergleich|karte)/],
   ['#/mehr', 'dots', 'Mehr', /^\/(mehr|login)/],
 ];
 
