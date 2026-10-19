@@ -46,6 +46,10 @@ Quiz, Vergleichen, Teilen als Bildkarte, Kunst-Karte mit «Museen in meiner Näh
 - **Leitstelle** = die Hauptsitzung: plant, priorisiert, pflegt `TODO.md`, startet Untersitzungen, prüft deren Ergebnis (Diff, Demo-Test) und führt sie zusammen. Sie programmiert selbst nur Kleinigkeiten.
 - **Untersitzung** = eine Aufgabe aus `TODO.md` (Nr. im Titel), eigener Worktree/Branch, liest diese Datei, testet im Demo-Modus, committet auf ihren Branch, pusht **nicht** auf `main`. Am Ende: kurzer Bericht (was geändert, was getestet, was offen).
 - Nie zwei Untersitzungen gleichzeitig an denselben Dateien (z. B. `js/views/work.js`, `styles.css`).
+- **Modell (Entscheid Maurice 20.10.2026: so günstig wie möglich):** Untersitzungen starten immer mit dem Modell aus der Spalte «Modell» in TODO.md
+  (`model` beim Start setzen, sonst erbt die Untersitzung Opus von der Leitstelle). Standard ist Sonnet (`claude-sonnet-5-5`),
+  Haiku (`claude-haiku-5-5`) für Kleinigkeiten, Opus nur für wirklich knifflige Aufgaben (Architektur, schwierige Fehlersuche, heikle Daten). Nur die Leitstelle läuft mit Opus.
+  Untersitzungen immer mit eigenem Worktree (`use_worktree: true`) und in der Seitenleisten-Gruppe «App Art Explainer».
 - Nach jedem Abschluss: `TODO.md` nachführen, Version erhöhen, pushen, Online-Version prüfen. Untersitzungen ändern `TODO.md` nicht – das macht nur die Leitstelle.
 - In der Leitstelle nie `git commit -a`; nur eigene Dateien adden (z. B. `git add TODO.md`).
 
