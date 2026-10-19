@@ -36,6 +36,7 @@ Plan: Foto von Bild oder Skulptur → Erkennung durch Claude → Erklärung, ver
 | E11 | Teilen als Bildkarte | Foto, Titel, Fun Fact als PNG, Teilen-Menü (Handy) oder Download (PC) | Claude | Opus | 19.10.2026 |
 | E12 | Quiz | Bis 5 Fragen zu Künstler, Epoche, Entstehungszeit aus der eigenen Sammlung, Bestwert | Claude | Opus | 19.10.2026 |
 | E13 | Vergleichen | Zweites Werk wählen, Claude vergleicht (einmal pro Paar, auf dem Gerät gespeichert) | Claude | Opus | 19.10.2026 |
-| E14 | Kunst-Karte | Leaflet/OpenStreetMap, Standort beim Scannen nur nach Einwilligung, Fotos als Kartenpunkte (Museen in der Nähe noch offen) | Claude | Opus | 19.10.2026 |
+| E14 | Kunst-Karte | Leaflet/OpenStreetMap, Standort beim Scannen nur nach Einwilligung, Fotos als Kartenpunkte | Claude | Opus | 19.10.2026 |
 | E15 | Rundgang-Tipp | Während eines Besuchs: «Was als Nächstes?» schlägt passende Werke im gleichen Museum vor | Claude | Opus | 19.10.2026 |
 | E16 | Damals und heute | Erster Querverweis in jedem Werk führt zu einem Artikel über früher und heute | Claude | Opus | 19.10.2026 |
+| E17 | Museen in der Nähe | Auf der Kunst-Karte: Museen/Galerien aus OpenStreetMap (Overpass), Umkreis 2–25 km, Filter «Nur Kunst», Liste mit Distanz, Öffnungszeiten, Webseite, Weg | Claude | Opus | 19.10.2026 |

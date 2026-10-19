@@ -298,3 +298,12 @@ details.fold:not([open]) { border-bottom: 1px solid var(--line); padding-bottom:
 .map { isolation: isolate; height: 60vh; min-height: 320px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); margin-bottom: 8px; background: var(--surface-2); }
 .map-pin img { box-sizing: border-box; display: block; width: 44px; height: 44px; object-fit: cover; border-radius: 50%; border: 3px solid #fff; box-shadow: 0 2px 6px rgba(0,0,0,.35); }
 .tip-box { margin-top: 0; }
+
+/* Museen in der Nähe */
+.nearby-bar { margin-bottom: 10px; }
+.nearby-bar select { min-height: 44px; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 0 12px; }
+.museum-pin { display: grid; place-items: center; font-size: 16px; background: #fff; border: 2px solid var(--muted); border-radius: 50%; box-shadow: 0 1px 4px rgba(0,0,0,.3); }
+.museum-pin.art { border-color: #a8402d; }
+.near-list { list-style: none; padding: 0; margin: 0 0 8px; display: grid; gap: 8px; }
+.near-list li { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.near-list li .row { flex: none; }
