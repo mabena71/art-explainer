@@ -18,7 +18,8 @@ import quiz from './views/quiz.js';
 import compare from './views/compare.js';
 import mapView from './views/map.js';
 
-const MODE_KEY = 'kunst.mode';
+// Neuer Name: Der alte Schlüssel «kunst.mode» wurde durch Links mit ?demo dauerhaft auf Demo gesetzt
+const MODE_KEY = 'kunst.modus';
 
 const routes = [
   [/^\/$/, scan],
@@ -44,15 +45,15 @@ let cleanup = null;
 /** Wechselt zwischen Demo und echtem Betrieb und lädt die App neu. */
 export function setDemo(on) {
   localStorage.setItem(MODE_KEY, on ? 'demo' : 'cloud');
-  location.hash = on ? '#/' : '#/login';
-  location.reload();
+  // ohne ?demo neu laden, sonst bliebe die Demo aktiv
+  location.replace(location.pathname + (on ? '#/' : '#/login'));
 }
 
 async function decideMode() {
   const params = new URLSearchParams(location.search);
-  if (params.has('demo')) localStorage.setItem(MODE_KEY, 'demo');
   if (!cloudConfigured()) { state.demo = true; return; }
-  state.demo = localStorage.getItem(MODE_KEY) === 'demo';
+  // ?demo gilt nur für diesen Aufruf; dauerhaft nur über «Demo ansehen» in der App
+  state.demo = params.has('demo') || localStorage.getItem(MODE_KEY) === 'demo';
   if (!state.demo) {
     try { state.session = await currentSession(); } catch (e) { console.error(e); }
   }
@@ -63,7 +64,9 @@ function renderNav(path) {
   nav.hidden = false;
   nav.innerHTML = NAV.map(([href, ic, label, re]) =>
     `<a href="${href}" class="${re.test(path) ? 'active' : ''}">${icon(ic)}<span>${label}</span></a>`).join('');
-  document.getElementById('demo-banner').hidden = !state.demo;
+  const banner = document.getElementById('demo-banner');
+  banner.hidden = !state.demo;
+  banner.onclick = () => { location.hash = '#/mehr'; };
 }
 
 async function route() {

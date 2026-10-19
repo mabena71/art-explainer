@@ -1,7 +1,7 @@
 // Service Worker: Die App startet auch ohne Netz (Sammlung ansehen); Scannen braucht Internet.
 // Eigene Dateien: zuerst Netz (damit Updates sofort ankommen), sonst Cache.
 // Bibliotheken und Schriften vom CDN: zuerst Cache (Versionen sind fest).
-const CACHE = 'kunst-v4';
+const CACHE = 'kunst-v5';
 const SHELL = [
   './', 'index.html', 'styles.css', 'manifest.webmanifest',
   'icons/icon-192.png', 'icons/icon-512.png', 'icons/favicon.png',
