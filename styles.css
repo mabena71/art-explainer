@@ -1,16 +1,16 @@
-/* Art Explainer – ruhig wie ein Museum: warmes Papierweiss, Serifen-Titel, Akzent in Siena-Rot und Gold. */
+/* Art Explainer – «Espresso und Terrakotta»: warmes Papier (hell) bzw. Espresso-Braun (dunkel), Serifen-Titel, Akzent Terrakotta, Gold als Funke. */
 :root {
-  --bg: #f6f2ea;
-  --surface: #fffdf8;
-  --surface-2: #ede6d9;
-  --text: #1c1917;
-  --muted: #6b625a;
-  --line: #e3dacb;
-  --accent: #a8402d;
+  --bg: #f2ebdd;
+  --surface: #fbf7ee;
+  --surface-2: #e6dcc8;
+  --text: #2b2218;
+  --muted: #6a5d4c;
+  --line: #dacfb8;
+  --accent: #a9532d;
   --accent-ink: #ffffff;
-  --accent-soft: #f3dfd7;
-  --gold: #b88a1b;
-  --gold-soft: #f4e9c8;
+  --accent-soft: #f0d9c9;
+  --gold: #8f650c;
+  --gold-soft: #f3e2b5;
   --bad: #b42318;
   --radius: 14px;
   --nav-h: 64px;
@@ -20,31 +20,21 @@
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #161412;
-    --surface: #211e1b;
-    --surface-2: #2c2824;
-    --text: #f2ede4;
-    --muted: #a99f93;
-    --line: #3a342e;
-    --accent: #e0745c;
-    --accent-ink: #1c1917;
-    --accent-soft: #3d2620;
-    --gold: #d9b14a;
-    --gold-soft: #3a3020;
+    --bg: #16110d;
+    --surface: #211a14;
+    --surface-2: #2c231b;
+    --text: #f2ebdd;
+    --muted: #b3a794;
+    --line: #3a2f24;
+    --accent: #d98558;
+    --accent-ink: #16110d;
+    --accent-soft: #3d2a1e;
+    --gold: #f0c874;
+    --gold-soft: #3a2d12;
     --bad: #f0796d;
     color-scheme: dark;
   }
 }
-
-/* Design-Konzepte zum Ausprobieren (Nr. 9): html[data-theme="1…4"], Wahl unter «Mehr». Nach der Entscheidung bleibt nur eines übrig. */
-html[data-theme="1"] { --bg: #fff4e0; --surface: #fffaf0; --surface-2: #fbe6c4; --text: #2a1f33; --muted: #6a5d73; --line: #f0d9b0; --accent: #d02e57; --accent-ink: #ffffff; --accent-soft: #fbdde3; --gold: #b57900; --gold-soft: #ffe7a8; --bad: #b42318; color-scheme: light; }
-@media (prefers-color-scheme: dark) { html[data-theme="1"] { --bg: #211a2e; --surface: #2b2339; --surface-2: #372d48; --text: #fff4e0; --muted: #b9aec6; --line: #473b5c; --accent: #ff7a93; --accent-ink: #211a2e; --accent-soft: #4a2840; --gold: #ffc233; --gold-soft: #4a3c1c; --bad: #ff8a80; color-scheme: dark; } }
-html[data-theme="2"] { --bg: #f5f1e8; --surface: #fdfbf6; --surface-2: #ebe6d9; --text: #14141a; --muted: #62605a; --line: #ddd7c8; --accent: #1a1a22; --accent-ink: #f2b84b; --accent-soft: #ece6d3; --gold: #a87408; --gold-soft: #f6e3b8; --bad: #b42318; color-scheme: light; }
-@media (prefers-color-scheme: dark) { html[data-theme="2"] { --bg: #0e0e12; --surface: #17171d; --surface-2: #22222b; --text: #f0ece2; --muted: #a09c92; --line: #2e2e38; --accent: #f2b84b; --accent-ink: #0e0e12; --accent-soft: #2a2417; --gold: #f2b84b; --gold-soft: #2a2417; --bad: #f0796d; color-scheme: dark; } }
-html[data-theme="3"] { --bg: #fafaf7; --surface: #ffffff; --surface-2: #efefea; --text: #111111; --muted: #5f5f5a; --line: #e2e2dc; --accent: #2b4cff; --accent-ink: #ffffff; --accent-soft: #e6ebff; --gold: #a87000; --gold-soft: #f7ecd0; --bad: #b42318; color-scheme: light; }
-@media (prefers-color-scheme: dark) { html[data-theme="3"] { --bg: #121214; --surface: #1b1b1e; --surface-2: #26262a; --text: #f4f4f0; --muted: #a0a09a; --line: #333338; --accent: #7d93ff; --accent-ink: #0b0b0d; --accent-soft: #1d2447; --gold: #e0b04a; --gold-soft: #332b16; --bad: #f0796d; color-scheme: dark; } }
-html[data-theme="4"] { --bg: #f2ebdd; --surface: #fbf7ee; --surface-2: #e6dcc8; --text: #2b2218; --muted: #6a5d4c; --line: #dacfb8; --accent: #a9532d; --accent-ink: #ffffff; --accent-soft: #f0d9c9; --gold: #596830; --gold-soft: #dfe4c4; --bad: #b42318; color-scheme: light; }
-@media (prefers-color-scheme: dark) { html[data-theme="4"] { --bg: #1f1a14; --surface: #2a231b; --surface-2: #352d23; --text: #f2ebdd; --muted: #b3a794; --line: #43392c; --accent: #d98558; --accent-ink: #1f1a14; --accent-soft: #3d2a1e; --gold: #c9d38a; --gold-soft: #343a1c; --bad: #f0796d; color-scheme: dark; } }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; }
@@ -317,9 +307,3 @@ details.fold:not([open]) { border-bottom: 1px solid var(--line); padding-bottom:
 .near-list { list-style: none; padding: 0; margin: 0 0 8px; display: grid; gap: 8px; }
 .near-list li { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
 .near-list li .row { flex: none; }
-
-.themes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 10px 0; }
-.theme-pick { display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--surface); border: 2px solid var(--line); border-radius: var(--radius); text-align: left; cursor: pointer; }
-.theme-pick img { width: 44px; height: 44px; border-radius: 10px; flex: none; }
-.theme-pick span { font-size: .85rem; line-height: 1.25; }
-.theme-pick.on { border-color: var(--accent); }
