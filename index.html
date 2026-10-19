@@ -13,6 +13,24 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="styles.css">
+  <script>
+    /* Design-Test (Nr. 9): ?theme=1…4 oder Wahl unter «Mehr»; 0 = bisheriges Design */
+    (function () {
+      try {
+        var q = /[?&]theme=(\d)/.exec(location.search + location.hash);
+        if (q) localStorage.setItem('kunst.theme', q[1] === '0' ? '' : q[1]);
+        var t = localStorage.getItem('kunst.theme');
+        if (t && /^[1-4]$/.test(t)) {
+          document.documentElement.dataset.theme = t;
+          var dark = matchMedia('(prefers-color-scheme: dark)').matches;
+          var tc = { 1: ['#fff4e0', '#211a2e'], 2: ['#f5f1e8', '#0e0e12'], 3: ['#fafaf7', '#121214'], 4: ['#f2ebdd', '#1f1a14'] }[t];
+          document.querySelector('meta[name=theme-color]').content = tc[dark ? 1 : 0];
+          document.querySelector('link[rel=icon]').href = 'icons/k' + t + '-fav-64.png';
+          document.querySelector('link[rel=apple-touch-icon]').href = 'icons/k' + t + '-apple-180.png';
+        }
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <div id="demo-banner" class="demo-banner" role="button" hidden><strong>Demo-Modus</strong> – jedes Foto wird als «Sternennacht» erkannt, nichts wird gespeichert. <u>Hier tippen zum Anmelden</u></div>

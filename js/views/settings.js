@@ -32,6 +32,15 @@ export default async function settings(el) {
         <label class="switch"><input type="checkbox" data-kids ${prefs.kids ? 'checked' : ''}><span>Kinder-Modus: einfache Erklärung und Suchaufgabe zu jedem Werk</span></label>
       </section>
 
+      <section class="box">
+        <h2>Design ausprobieren</h2>
+        <div class="themes">
+          ${[['', 'Bisher', 'icons/favicon.png'], ['1', '1 Bunt', 'icons/k1-fav-64.png'], ['2', '2 Dunkel, edel', 'icons/k2-fav-64.png'], ['3', '3 Hell, minimal', 'icons/k3-fav-64.png'], ['4', '4 Natürlich', 'icons/k4-fav-64.png']]
+            .map(([v, l, img]) => `<button class="theme-pick ${(document.documentElement.dataset.theme || '') === v ? 'on' : ''}" data-theme-pick="${v}"><img src="${img}" alt=""><span>${l}</span></button>`).join('')}
+        </div>
+        <p class="muted small">Vorübergehend zum Testen. Hell/Dunkel folgt dem Handy.</p>
+      </section>
+
       ${voice.supported() ? `
       <section class="box">
         <h2>Vorlesen</h2>
@@ -57,6 +66,10 @@ export default async function settings(el) {
       <p class="muted small center">Art Explainer · Version ${APP_VERSION}</p>
     </div>`;
 
+  el.querySelectorAll('[data-theme-pick]').forEach(b => b.onclick = () => {
+    try { localStorage.setItem('kunst.theme', b.dataset.themePick); } catch {}
+    location.reload();
+  });
   el.querySelector('[data-kids]').onchange = e => { prefs.kids = e.target.checked; toast(e.target.checked ? 'Kinder-Modus an' : 'Kinder-Modus aus'); };
   el.querySelector('[data-rate]')?.addEventListener('change', e => localStorage.setItem('kunst.rate', e.target.value));
   el.querySelector('[data-test-voice]')?.addEventListener('click', () => voice.speak('Grüezi! So klinge ich, wenn ich dir ein Kunstwerk erkläre.'));

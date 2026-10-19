@@ -1,6 +1,13 @@
 // Teilen als Bildkarte: Foto, Titel, Künstler und ein «Wusstest du?» als Bild (1080 × 1350, gut für WhatsApp und Instagram).
 const W = 1080, H = 1350, PAD = 72;
-const BG = '#f6f2ea', INK = '#1c1917', MUTED = '#6b625a', ACCENT = '#a8402d', GOLD = '#b88a1b';
+const LIGHT = { // helle Farben je Design-Konzept (die Bildkarte ist immer hell)
+  '': ['#f6f2ea', '#1c1917', '#6b625a', '#a8402d', '#b88a1b'],
+  1: ['#fff4e0', '#2a1f33', '#6a5d73', '#d02e57', '#b57900'],
+  2: ['#f5f1e8', '#14141a', '#62605a', '#a87408', '#a87408'],
+  3: ['#fafaf7', '#111111', '#5f5f5a', '#2b4cff', '#a87000'],
+  4: ['#f2ebdd', '#2b2218', '#6a5d4c', '#a9532d', '#596830'],
+};
+const [BG, INK, MUTED, ACCENT, GOLD] = LIGHT[document.documentElement.dataset.theme || ''] || LIGHT[''];
 
 function wrap(ctx, text, maxWidth, maxLines) {
   const words = String(text || '').split(/\s+/);

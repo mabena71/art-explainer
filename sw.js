@@ -4,7 +4,7 @@
 const CACHE = 'kunst-v6';
 const SHELL = [
   './', 'index.html', 'styles.css', 'manifest.webmanifest',
-  'icons/icon-192.png', 'icons/icon-512.png', 'icons/favicon.png',
+  'icons/icon-192.png', 'icons/icon-512.png', 'icons/favicon.png', 'icons/k1-fav-64.png', 'icons/k1-apple-180.png', 'icons/k2-fav-64.png', 'icons/k2-apple-180.png', 'icons/k3-fav-64.png', 'icons/k3-apple-180.png', 'icons/k4-fav-64.png', 'icons/k4-apple-180.png',
   'js/app.js', 'js/api.js', 'js/cloud.js', 'js/config.js', 'js/db.js', 'js/demo.js', 'js/icons.js',
   'js/photo.js', 'js/speak.js', 'js/state.js', 'js/ui.js', 'js/version.js', 'js/sync.js', 'js/visit.js', 'js/rewards.js', 'js/share.js',
   'js/views/quiz.js', 'js/views/compare.js', 'js/views/map.js', 'js/nearby.js',
