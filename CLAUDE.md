@@ -46,4 +46,12 @@ Quiz, Vergleichen, Teilen als Bildkarte, Kunst-Karte mit «Museen in meiner Näh
 - **Leitstelle** = die Hauptsitzung: plant, priorisiert, pflegt `TODO.md`, startet Untersitzungen, prüft deren Ergebnis (Diff, Demo-Test) und führt sie zusammen. Sie programmiert selbst nur Kleinigkeiten.
 - **Untersitzung** = eine Aufgabe aus `TODO.md` (Nr. im Titel), eigener Worktree/Branch, liest diese Datei, testet im Demo-Modus, committet auf ihren Branch, pusht **nicht** auf `main`. Am Ende: kurzer Bericht (was geändert, was getestet, was offen).
 - Nie zwei Untersitzungen gleichzeitig an denselben Dateien (z. B. `js/views/work.js`, `styles.css`).
-- Nach jedem Abschluss: `TODO.md` nachführen (Zeile von «Offen» nach «Erledigt» mit Datum), Version erhöhen, pushen, Online-Version prüfen.
+- Nach jedem Abschluss: `TODO.md` nachführen, Version erhöhen, pushen, Online-Version prüfen. Untersitzungen ändern `TODO.md` nicht – das macht nur die Leitstelle.
+- In der Leitstelle nie `git commit -a`; nur eigene Dateien adden (z. B. `git add TODO.md`).
+
+## TODO.md – Format (wie bei Roundabout Hunter)
+- «Offene Punkte»: eine einzige Tabelle mit Spalten Nr | Phase | Thema | Details | Wer | Modell | Aufwand | Prio | Status | Abhängig von.
+  Status z. B. offen, in Arbeit, Test offen, wartet auf Hochladen, Idee, später.
+- «Erledigt»: Nr | Thema | Details | Erledigt am – neueste zuoberst; erledigte Punkte behalten ihre Nummer.
+- Darunter «Reihenfolge» (vereinbarte nächste Schritte), «Kosten (ohne Claude-Abo)» und die Phasen-Legende (1 Familie testet, 2 Erlebnis ausbauen, 3 Veröffentlichung, 4 Betrieb).
+- Neue Nummern fortlaufend; die zuletzt vergebene steht oben in der Datei.
