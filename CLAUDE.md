@@ -55,3 +55,7 @@ Quiz, Vergleichen, Teilen als Bildkarte, Kunst-Karte mit «Museen in meiner Näh
 - «Erledigt»: Nr | Thema | Details | Erledigt am – neueste zuoberst; erledigte Punkte behalten ihre Nummer.
 - Darunter «Reihenfolge» (vereinbarte nächste Schritte), «Kosten (ohne Claude-Abo)» und die Phasen-Legende (1 Familie testet, 2 Erlebnis ausbauen, 3 Veröffentlichung, 4 Betrieb).
 - Neue Nummern fortlaufend; die zuletzt vergebene steht oben in der Datei.
+- Maurice liest die Liste lieber als Seite: Artifact «To-do Art Explainer» https://claude.ai/artifact/6JafvntrsXXswuef7JRF4m, Quelle `docs/todo-uebersicht.html`
+  (Gruppen: Läuft gerade, Deine Aufgaben, Als Nächstes, Später, Phasen, Erledigt, Kosten; mit Minuten und grob geschätzten Tokens).
+  Bei jeder Änderung an TODO.md von Hand nachführen und dieselbe Datei neu veröffentlichen (aus anderer Sitzung mit `url`).
+  «Tokens bisher» oben rechts mit `python scripts/tokens_zaehlen.py` neu messen.

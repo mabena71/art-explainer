@@ -1,0 +1,246 @@
+<title>To-do Art Explainer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+  /* Layout: Kopf, Kennzahlen, dann Gruppen nach Stand als ruhige Zeilenlisten */
+  :root {
+    --paper: #f3f5f2;
+    --surface: #ffffff;
+    --ink: #1b2622;
+    --muted: #5d6a64;
+    --line: #dde3df;
+    --line-soft: #e9eeeb;
+    --accent: #6b3f6e;
+    --accent-soft: #f1e6f1;
+    --run: #275f8f;
+    --run-soft: #e3edf6;
+    --wait: #8a5a12;
+    --wait-soft: #f6ecd9;
+    --me: #8c4a2b;
+    --me-soft: #f5e6dd;
+    --ok: #3f6f52;
+    --ok-soft: #e3ede6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #121715; --surface: #1a211e; --ink: #e6ebe8; --muted: #9aa8a1;
+      --line: #2b3531; --line-soft: #232c28; --accent: #d3a3d6; --accent-soft: #33223a;
+      --run: #8ab8e2; --run-soft: #1f2e3d; --wait: #e2b66a; --wait-soft: #3a2e1a;
+      --me: #e2a07f; --me-soft: #3a261c; --ok: #7fb894; --ok-soft: #223328;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #121715; --surface: #1a211e; --ink: #e6ebe8; --muted: #9aa8a1;
+    --line: #2b3531; --line-soft: #232c28; --accent: #d3a3d6; --accent-soft: #33223a;
+    --run: #8ab8e2; --run-soft: #1f2e3d; --wait: #e2b66a; --wait-soft: #3a2e1a;
+    --me: #e2a07f; --me-soft: #3a261c; --ok: #7fb894; --ok-soft: #223328;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink);
+    font-family: -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px; line-height: 1.5;
+  }
+  .page {
+    max-width: 920px; margin: 0 auto;
+    padding-block: 32px 64px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    display: flex; flex-direction: column; gap: 32px;
+  }
+  header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px 24px; border-bottom: 2px solid var(--ink); padding-bottom: 16px; }
+  .kopf-links { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .token-box { display: flex; flex-direction: column; align-items: flex-end; text-align: right; gap: 1px; }
+  .token-box span { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .token-box b { font-family: Georgia, serif; font-size: 24px; font-variant-numeric: tabular-nums; }
+  .token-box small { font-size: 11.5px; color: var(--muted); }
+  @media (max-width: 640px) { .token-box { align-items: flex-start; text-align: left; } }
+  .kosten { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .kosten th { text-align: left; font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 600; padding: 8px 12px; background: var(--line-soft); border-bottom: 1px solid var(--line); }
+  .kosten td { padding: 10px 12px; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
+  .kosten tr:last-child td { border-bottom: none; }
+  .kosten .chf { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .kosten .summe td { font-weight: 700; border-top: 1px solid var(--line); }
+  .kosten .geplant td { color: var(--muted); }
+  .kosten-wrap { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; }
+  .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+  h1 { font-family: Georgia, "Iowan Old Style", serif; font-size: clamp(26px, 4vw, 34px); margin: 0; text-wrap: balance; }
+  .sub { color: var(--muted); font-size: 13px; margin: 0; }
+  .stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .stat { background: var(--surface); padding: 14px 16px; display: flex; flex-direction: column; gap: 2px; }
+  .stat b { font-family: Georgia, serif; font-size: 24px; font-variant-numeric: tabular-nums; }
+  .stat span { font-size: 12px; color: var(--muted); }
+  section { display: flex; flex-direction: column; gap: 10px; }
+  .head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+  h2 { font-family: Georgia, serif; font-size: 20px; margin: 0; }
+  .count { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .list { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .cols, .row { display: grid; grid-template-columns: 40px minmax(0, 1fr) 70px 90px 110px; gap: 12px; align-items: center; padding: 11px 16px; }
+  .cols { font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); background: var(--line-soft); border-bottom: 1px solid var(--line); padding-block: 8px; }
+  .row { border-bottom: 1px solid var(--line-soft); }
+  .row:last-child { border-bottom: none; }
+  .nr { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; }
+  .t { font-weight: 600; font-size: 14px; margin: 0; }
+  .d { font-size: 12.5px; color: var(--muted); margin: 0; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; font-size: 13.5px; }
+  .r { text-align: right; }
+  .pill { justify-self: start; font-size: 11.5px; font-weight: 600; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+  .run { background: var(--run-soft); color: var(--run); }
+  .wait { background: var(--wait-soft); color: var(--wait); }
+  .me { background: var(--me-soft); color: var(--me); }
+  .open { background: var(--line-soft); color: var(--muted); border: 1px solid var(--line); }
+  .ok { background: var(--ok-soft); color: var(--ok); }
+  .later { display: flex; flex-wrap: wrap; gap: 8px; }
+  .later span { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; font-size: 13px; color: var(--muted); }
+  .later b { color: var(--ink); font-weight: 600; margin-right: 4px; font-variant-numeric: tabular-nums; }
+  details { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+  summary { cursor: pointer; padding: 12px 16px; font-weight: 600; }
+  summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .done { display: flex; flex-direction: column; border-top: 1px solid var(--line-soft); }
+  .done div { display: grid; grid-template-columns: 50px minmax(0, 1fr) 90px; gap: 12px; padding: 8px 16px; border-bottom: 1px solid var(--line-soft); font-size: 13px; }
+  .done div:last-child { border-bottom: none; }
+  .done .nr { font-size: 12px; }
+  .done .dt { color: var(--muted); text-align: right; font-variant-numeric: tabular-nums; }
+  footer { font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; }
+  @media (max-width: 640px) {
+    .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cols { display: none; }
+    .row { grid-template-columns: 34px minmax(0, 1fr) auto; grid-template-areas: "nr main pill" "nr meta meta"; row-gap: 4px; }
+    .row .nr { grid-area: nr; align-self: start; }
+    .row > div { grid-area: main; }
+    .row .pill { grid-area: pill; }
+    .row .num { display: none; }
+    .row .meta { grid-area: meta; display: block; }
+  }
+  .meta { display: none; font-size: 12px; color: var(--muted); }
+  .ph { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: .04em; padding: 1px 7px; border-radius: 4px; margin-right: 8px; vertical-align: 1px; background: var(--line-soft); color: var(--muted); }
+  :root { --p1: #3f7d2c; --p1s: #e4f2dc; --p2: #687a10; --p2s: #eef2d2; --p3: #8a6a00; --p3s: #faf0cc; --p4: #a8541a; --p4s: #fbe5d4; --p5: #9b1c1c; --p5s: #f7dcdc; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --p1: #9bd47f; --p1s: #22331b; --p2: #c6d36a; --p2s: #2e3317; --p3: #e8c75a; --p3s: #3a3115; --p4: #f0a06a; --p4s: #3d2617; --p5: #ef8a8a; --p5s: #3d1c1c; } }
+  :root[data-theme="dark"] { --p1: #9bd47f; --p1s: #22331b; --p2: #c6d36a; --p2s: #2e3317; --p3: #e8c75a; --p3s: #3a3115; --p4: #f0a06a; --p4s: #3d2617; --p5: #ef8a8a; --p5s: #3d1c1c; }
+  .ph.p1 { color: var(--p1); background: var(--p1s); }
+  .ph.p2 { color: var(--p2); background: var(--p2s); }
+  .ph.p3 { color: var(--p3); background: var(--p3s); }
+  .ph.p4 { color: var(--p4); background: var(--p4s); }
+  .ph.p5 { color: var(--p5); background: var(--p5s); }
+  .later-gruppe { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 10px; align-items: start; }
+  .later-gruppe .ph { justify-self: start; margin-top: 5px; }
+  .later-gruppe + .later-gruppe { margin-top: 4px; }
+  .legende { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 12.5px; color: var(--muted); }
+  .legende span { display: inline-flex; align-items: center; gap: 6px; }
+  .legende i { font-style: normal; margin-right: 0; }
+</style>
+
+<div class="page">
+  <header>
+    <div class="kopf-links">
+      <span class="eyebrow">App Art Explainer · Leitstelle</span>
+      <h1>To-do-Liste</h1>
+      <p class="sub">Stand 20.10.2026 · Version 2026.10.19-4 · Quelle: TODO.md im Projekt</p>
+    </div>
+    <div class="token-box" title="Summe aus den Gesprächsprotokollen aller Projekt-Sitzungen seit 18.10.2026">
+      <span>Tokens bisher</span>
+      <b>~93 Mio.</b>
+      <small>davon 98 % wiederverwendeter Kontext · 100 % Opus · seit 18.10.</small>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><b>0</b><span>Läuft gerade</span></div>
+    <div class="stat"><b>90</b><span>Min. als Nächstes (Claude)</span></div>
+    <div class="stat"><b>85</b><span>Min. deine Tests</span></div>
+    <div class="stat"><b>16</b><span>Erledigt</span></div>
+  </div>
+
+  <section>
+    <div class="head"><h2>Läuft gerade</h2><span class="count">0 Punkte</span></div>
+    <p class="sub">Zurzeit läuft keine Untersitzung.</p>
+  </section>
+
+  <section>
+    <div class="head"><h2>Deine Aufgaben</h2><span class="count">3 Punkte · 85 Min.</span></div>
+    <p class="sub">Zuerst Nr. 25: Ohne echten Abgleich-Test warten die Museums-Tests (Nr. 6) und der Familien-Feed (Nr. 20).</p>
+    <div class="list">
+      <div class="cols"><span>Nr</span><span>Aufgabe</span><span class="r">Minuten</span><span class="r">Tokens</span><span>Stand</span></div>
+      <div class="row"><span class="nr">25</span><div><p class="t"><span class="ph p1">Phase 1</span>Abgleich Handy/PC testen</p><p class="d">Angemeldet scannen (ohne gelben Demo-Balken), auf dem zweiten Gerät in der Sammlung prüfen</p></div><span class="num">5</span><span class="num">–</span><span class="pill me">offen</span><span class="meta">5 Min.</span></div>
+      <div class="row"><span class="nr">24</span><div><p class="t"><span class="ph p1">Phase 1</span>Installation auf Xiaomi/Poco</p><p class="d">Neustart, «Verknüpfung erstellen» · sonst Ursachensuche mit Claude (WebAPK)</p></div><span class="num">20</span><span class="num">~0.5 Mio.</span><span class="pill me">offen</span><span class="meta">20 Min. · ~0.5 Mio. Tokens</span></div>
+      <div class="row"><span class="nr">6</span><div><p class="t"><span class="ph p1">Phase 1</span>Testscans im Museum</p><p class="d">Sternennacht, Rodins Denker, Kunsthaus Zürich, unbekanntes Bild · nach Nr. 25</p></div><span class="num">60</span><span class="num">–</span><span class="pill wait">nach Nr. 25</span><span class="meta">60 Min.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="head"><h2>Als Nächstes</h2><span class="count">2 Punkte · 90 Min.</span></div>
+    <p class="sub">Reihenfolge: Abgleich und Xiaomi → Testscans im Museum → Audioguide und Design → später Geschmacksprofil, Familien-Feed, Veröffentlichung.</p>
+    <div class="list">
+      <div class="cols"><span>Nr</span><span>Aufgabe</span><span class="r">Minuten</span><span class="r">Tokens</span><span>Stand</span></div>
+      <div class="row"><span class="nr">8</span><div><p class="t"><span class="ph p2">Phase 2</span>Audioguide mit ElevenLabs</p><p class="d">Opus · zuerst Hörprobe 2–3 Stimmen und deine Kostenfreigabe</p></div><span class="num">60</span><span class="num">~2–3 Mio.</span><span class="pill open">offen</span><span class="meta">60 Min. · ~2–3 Mio. Tokens</span></div>
+      <div class="row"><span class="nr">9</span><div><p class="t"><span class="ph p2">Phase 2</span>Design-Etappe</p><p class="d">Opus · Farben und Logo zusammen festlegen (heute Platzhalter Rahmen + Lupe)</p></div><span class="num">30</span><span class="num">~1–2 Mio.</span><span class="pill open">offen</span><span class="meta">30 Min. · ~1–2 Mio. Tokens</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="head"><h2>Später</h2><span class="count">5 Punkte</span></div>
+    <div class="later-gruppe"><span class="ph p2">Phase 2</span><div class="later">
+      <span><b>18</b>Geschmacksprofil + Ausstellungstipps</span>
+      <span><b>20</b>Familien-Feed</span>
+    </div></div>
+    <div class="later-gruppe"><span class="ph p3">Phase 3</span><div class="later">
+      <span><b>23</b>Eigenes Supabase-Projekt</span>
+      <span><b>21</b>Öffentlich machen</span>
+    </div></div>
+    <div class="later-gruppe"><span class="ph p4">Phase 4</span><div class="later">
+      <span><b>22</b>Anthropic-Schlüssel erneuern (bis 31.12.2027)</span>
+    </div></div>
+  </section>
+
+  <section>
+    <div class="head"><h2>Phasen</h2><span class="count">Weg zur fertigen App</span></div>
+    <div class="legende">
+      <span><i class="ph p1">Phase 1</i>Familie testet</span>
+      <span><i class="ph p2">Phase 2</i>Erlebnis ausbauen</span>
+      <span><i class="ph p3">Phase 3</i>Veröffentlichung</span>
+      <span><i class="ph p4">Phase 4</i>Betrieb</span>
+    </div>
+  </section>
+
+  <details>
+    <summary>Erledigt (16)</summary>
+    <div class="done">
+      <div><span class="nr">28</span><span>Übergabe an Leitstelle, neues To-do-Format</span><span class="dt">20.10.2026</span></div>
+      <div><span class="nr">26</span><span>Demo-Falle entschärft (?demo nur einmalig)</span><span class="dt">19.10.2026</span></div>
+      <div><span class="nr">27</span><span>Museen in der Nähe</span><span class="dt">19.10.2026</span></div>
+      <div><span class="nr">10</span><span>Damals und heute</span><span class="dt">19.10.2026</span></div>
+      <div><span class="nr">12</span><span>Rundgang-Tipp</span><span class="dt">19.10.2026</span></div>
+      <div><span class="nr">17</span><span>Kunst-Karte</span><span class="dt">19.10.2026</span></div>
+      <div><span class="nr">14</span><span>Vergleichen</span><span class="dt">19.10.2026</span></div>
+      <div><span class="nr">15</span><span>Quiz</span><span class="dt">19.10.2026</span></div>
+      <div><span class="nr">19</span><span>Teilen als Bildkarte</span><span class="dt">19.10.2026</span></div>
+      <div><span class="nr">16</span><span>Abzeichen</span><span class="dt">19.10.2026</span></div>
+      <div><span class="nr">11</span><span>Museums-Modus</span><span class="dt">19.10.2026</span></div>
+      <div><span class="nr">7</span><span>Sammlung abgleichen (Test: Nr. 25)</span><span class="dt">19.10.2026</span></div>
+      <div><span class="nr">5</span><span>Online gestellt (GitHub Pages)</span><span class="dt">18.10.2026</span></div>
+      <div><span class="nr">3/4</span><span>Claude angeschlossen</span><span class="dt">18.10.2026</span></div>
+      <div><span class="nr">2/13</span><span>Grundversion mit Kinder-Modus</span><span class="dt">18.10.2026</span></div>
+      <div><span class="nr">1</span><span>Plan und Name</span><span class="dt">18.10.2026</span></div>
+    </div>
+  </details>
+
+  <section>
+    <div class="head"><h2>Kosten</h2><span class="count">ohne Claude-Abo · Stand 20.10.2026</span></div>
+    <div class="kosten-wrap">
+      <table class="kosten">
+        <thead><tr><th>Dienst</th><th>Wofür</th><th>Plan</th><th class="chf">Bisher</th><th class="chf">Laufend</th></tr></thead>
+        <tbody>
+          <tr><td>Anthropic API</td><td>Erkennung und Texte (Edge Function)</td><td>Guthaben, ca. 5–10 Rp. pro Scan</td><td class="chf">17.16 $ Guthaben (18.10.)</td><td class="chf">nach Verbrauch, max. 40 Abfragen/Person/Tag</td></tr>
+          <tr><td>Supabase</td><td>Login, Sammlung, Fotos, Function</td><td>Free (Projekt bena-fit)</td><td class="chf">CHF 0</td><td class="chf">0</td></tr>
+          <tr><td>GitHub Pages</td><td>Hosting der App</td><td>Free</td><td class="chf">CHF 0</td><td class="chf">0</td></tr>
+          <tr><td>OpenStreetMap</td><td>Karte, Museen in der Nähe</td><td>frei nutzbar</td><td class="chf">CHF 0</td><td class="chf">0</td></tr>
+          <tr class="summe"><td colspan="3">Total bisher (ohne API-Guthaben)</td><td class="chf">CHF 0</td><td class="chf">nur API-Verbrauch</td></tr>
+          <tr class="geplant"><td>ElevenLabs</td><td>Natürliche Vorlese-Stimme (Nr. 8)</td><td>geplant</td><td class="chf">–</td><td class="chf">nur nach Hörprobe und Freigabe</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>Minuten aus TODO.md. Tokens pro Aufgabe sind grobe Schätzungen der Leitstelle, meist günstig wiederverwendeter Kontext. «Tokens bisher» ist gemessen mit python scripts/tokens_zaehlen.py (Gesprächsprotokolle aller Projekt-Sitzungen); beim Pro-Abo fallen dafür keine Zusatzkosten an. Die API-Kosten der App laufen separat über das Anthropic-Guthaben.</footer>
+</div>
