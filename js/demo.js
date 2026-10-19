@@ -61,7 +61,12 @@ export function demoArticle(titel, art) {
   };
 }
 
-export function demoChat(frage) {
+export function demoChat(frage, werk) {
+  if (werk?.museumsbesuch) {
+    return { antwort: `Ein Besuch voller Nachthimmel: Im Demo-Modus erkennt die App jedes Foto als «Sternennacht» – darum sieht dein Besuch in «${werk.museumsbesuch}» etwas eintönig aus.
+
+Mit Claude verbunden steht hier eine persönliche Zusammenfassung: welche roten Fäden deine Werke verbinden, was deine Highlights waren und ein Tipp für den nächsten Besuch.` };
+  }
   return {
     antwort: `Gute Frage! Im Demo-Modus kann ich noch nicht wirklich antworten. Mit Claude verbunden bekommst du hier eine kurze, persönliche Antwort auf «${frage}» – zum Beispiel, warum der Himmel so wirbelt oder was Van Gogh seinem Bruder darüber schrieb.`,
   };

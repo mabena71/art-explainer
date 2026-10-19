@@ -5,6 +5,7 @@ import { cloudConfigured } from './config.js';
 import { currentSession } from './cloud.js';
 import { stop as stopSpeaking } from './speak.js';
 import { icon } from './icons.js';
+import * as sync from './sync.js';
 
 import scan from './views/scan.js';
 import work from './views/work.js';
@@ -12,6 +13,7 @@ import explore from './views/explore.js';
 import collection from './views/collection.js';
 import settings from './views/settings.js';
 import login from './views/login.js';
+import visitView from './views/visit.js';
 
 const MODE_KEY = 'kunst.mode';
 
@@ -22,11 +24,12 @@ const routes = [
   [/^\/sammlung$/, collection],
   [/^\/mehr$/, settings],
   [/^\/login$/, login],
+  [/^\/besuch\/([^/]+)$/, visitView],
 ];
 
 const NAV = [
   ['#/', 'camera', 'Scannen', /^\/($|w\/|explore)/],
-  ['#/sammlung', 'grid', 'Sammlung', /^\/sammlung/],
+  ['#/sammlung', 'grid', 'Sammlung', /^\/(sammlung|besuch)/],
   ['#/mehr', 'dots', 'Mehr', /^\/(mehr|login)/],
 ];
 
@@ -87,10 +90,19 @@ async function route() {
 
 async function start() {
   await decideMode();
-  await db.open(state.demo ? 'kunst-demo' : 'kunst');
+  // Pro Person eine eigene Datenbank, damit sich Konten auf demselben Gerät nicht mischen
+  await db.open(state.demo ? 'kunst-demo' : state.session ? `kunst-${state.session.user.id}` : 'kunst');
   db.persist();
+  if (state.session && !localStorage.getItem('kunst.adopted')) {
+    try { await db.adoptFrom('kunst'); localStorage.setItem('kunst.adopted', '1'); } catch (e) { console.warn(e); }
+  }
   window.addEventListener('hashchange', route);
   await route();
+  if (!state.demo && state.session) {
+    // Neue Daten von anderen Geräten: Sammlung neu zeichnen (nicht die Startseite, dort könnte gerade ein Scan laufen)
+    sync.onSynced(() => { if (location.hash.startsWith('#/sammlung')) route(); });
+    sync.start();
+  }
   if ('serviceWorker' in navigator && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
     navigator.serviceWorker.register('sw.js').catch(e => console.warn('Service Worker:', e));
   }

@@ -1,8 +1,11 @@
 // Startseite: Kunstwerk fotografieren oder aus der Galerie wählen, dann analysieren lassen.
+// Läuft ein Museumsbesuch, werden neue Scans ihm zugeordnet.
 import * as db from '../db.js';
 import { analyze } from '../api.js';
 import { prepare } from '../photo.js';
-import { esc, uid, loadingText } from '../ui.js';
+import * as visit from '../visit.js';
+import { newBadges } from '../rewards.js';
+import { esc, uid, loadingText, toast } from '../ui.js';
 import { icon } from '../icons.js';
 
 const LOADING = [
@@ -14,12 +17,21 @@ const LOADING = [
 ];
 
 export default async function scan(el) {
-  const recent = (await db.allScans()).slice(0, 4);
+  const all = await db.allScans();
+  const recent = all.slice(0, 4);
+  const v = visit.active();
+  const inVisit = v ? all.filter(s => s.visit?.id === v.id).length : 0;
+
   el.innerHTML = `
     <section class="hero">
       <p class="kicker">Art Explainer</p>
       <h1 class="display">Was siehst du da?</h1>
       <p class="lead">Fotografiere ein Bild, eine Skulptur oder ein Bauwerk – und entdecke, was dahintersteckt.</p>
+      ${v ? `
+      <div class="visit-banner">
+        <div><span class="muted small">Museumsbesuch läuft</span><br><strong>${esc(v.name)}</strong> · ${inVisit} ${inVisit === 1 ? 'Werk' : 'Werke'}</div>
+        <button class="btn btn-small btn-ghost" data-end>Beenden</button>
+      </div>` : ''}
       <label class="btn btn-big">
         ${icon('camera')}<span>Kunstwerk fotografieren</span>
         <input type="file" accept="image/*" capture="environment" hidden data-pick>
@@ -28,6 +40,15 @@ export default async function scan(el) {
         ${icon('image')}<span>Aus der Galerie wählen</span>
         <input type="file" accept="image/*" hidden data-pick>
       </label>
+      ${v ? '' : `
+      <details class="visit-start">
+        <summary>${icon('museum')}<span>Museumsbesuch starten</span></summary>
+        <form class="ask" data-visit>
+          <input name="name" placeholder="Wo bist du? z. B. Kunsthaus Zürich" maxlength="80" autocomplete="off">
+          <button class="btn">Los</button>
+        </form>
+        <p class="muted small">Alle Werke, die du jetzt scannst, landen gemeinsam im Besuch. Am Schluss gibt es eine Zusammenfassung mit deinen Highlights.</p>
+      </details>`}
       <p class="muted small tip">Tipp: Möglichst gerade und ganz aufs Werk, ohne Spiegelung. Ein Foto vom Schild daneben hilft auch.</p>
     </section>
     <section id="busy" class="busy" hidden>
@@ -44,6 +65,18 @@ export default async function scan(el) {
   const busy = el.querySelector('#busy');
   let stopText = null;
 
+  el.querySelector('[data-visit]')?.addEventListener('submit', e => {
+    e.preventDefault();
+    const started = visit.startVisit(e.target.name.value);
+    toast(`Besuch «${started.name}» gestartet`);
+    scan(el);
+  });
+  el.querySelector('[data-end]')?.addEventListener('click', () => {
+    const ended = visit.endVisit();
+    if (ended && inVisit) location.hash = `#/besuch/${ended.id}`;
+    else { toast('Besuch beendet'); scan(el); }
+  });
+
   el.querySelectorAll('[data-pick]').forEach(input => input.addEventListener('change', async () => {
     const file = input.files?.[0];
     input.value = '';
@@ -58,11 +91,14 @@ export default async function scan(el) {
       stopText = loadingText(busy.querySelector('.busy-text'), LOADING);
       const analysis = await analyze(photo.base64);
       const id = uid();
+      const current = visit.active();
       await db.putScan({
         id, created_at: new Date().toISOString(),
         photo: photo.blob, thumb: photo.thumb, ratio: photo.ratio,
         analysis, chat: [], fav: false, note: '',
+        visit: current ? { id: current.id, name: current.name } : null,
       });
+      for (const b of newBadges(all, await db.allScans())) toast(`${b.emoji} Neues Abzeichen: ${b.title}`);
       location.hash = `#/w/${id}`;
     } catch (e) {
       console.error(e);
@@ -84,7 +120,7 @@ export default async function scan(el) {
 export function card(s) {
   const a = s.analysis || {};
   return `<a class="card" href="#/w/${s.id}">
-    <img src="${s.thumb}" alt="" loading="lazy">
+    <img src="${s.thumb || 'icons/icon-192.png'}" alt="" loading="lazy">
     <div class="card-body">
       <strong>${esc(a.titel)}</strong>
       <span class="muted small">${esc([a.kuenstler, a.jahr].filter(Boolean).join(', '))}</span>

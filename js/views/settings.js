@@ -3,6 +3,7 @@ import * as db from '../db.js';
 import { state, prefs } from '../state.js';
 import { cloudConfigured } from '../config.js';
 import { signOut } from '../cloud.js';
+import * as sync from '../sync.js';
 import { setDemo } from '../app.js';
 import { APP_VERSION } from '../version.js';
 import { esc, toast } from '../ui.js';
@@ -45,8 +46,12 @@ export default async function settings(el) {
 
       <section class="box">
         <h2>Daten</h2>
+        ${!state.demo && state.session ? `
+        <p class="muted small">Die Sammlung ist in deinem Konto gespeichert und erscheint auf all deinen Geräten.</p>
+        <button class="btn btn-ghost" data-sync>Jetzt abgleichen</button>
+        <button class="btn btn-ghost" data-wipe>Gerätespeicher neu laden</button>` : `
         <p class="muted small">Die Sammlung ist auf diesem Gerät gespeichert.</p>
-        <button class="btn btn-ghost btn-danger" data-wipe>Sammlung auf diesem Gerät löschen</button>
+        <button class="btn btn-ghost btn-danger" data-wipe>Sammlung auf diesem Gerät löschen</button>`}
       </section>
 
       <p class="muted small center">Art Explainer · Version ${APP_VERSION}</p>
@@ -62,7 +67,22 @@ export default async function settings(el) {
     state.session = null;
     location.hash = '#/login';
   });
+  el.querySelector('[data-sync]')?.addEventListener('click', async e => {
+    e.target.disabled = true;
+    const n = await sync.sync();
+    e.target.disabled = false;
+    toast(n ? `${n} Änderung(en) geholt` : 'Alles auf dem neuesten Stand');
+  });
   el.querySelector('[data-wipe]').onclick = async () => {
+    if (!state.demo && state.session) {
+      // Noch nicht hochgeladene Änderungen zuerst sichern, dann alles frisch vom Konto holen
+      await sync.sync();
+      await db.wipe();
+      sync.resetPull();
+      const n = await sync.sync();
+      toast(`${n} Werke neu geladen`);
+      return;
+    }
     if (!confirm('Alle Werke dieser Sammlung auf diesem Gerät löschen? Das lässt sich nicht rückgängig machen.')) return;
     await db.wipe();
     toast('Sammlung gelöscht');

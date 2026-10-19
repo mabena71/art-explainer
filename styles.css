@@ -243,3 +243,32 @@ details.fold:not([open]) { border-bottom: 1px solid var(--line); padding-bottom:
 @media (prefers-reduced-motion: reduce) {
   .scanline, .hotspot, .typing span { animation: none; }
 }
+
+/* Museums-Modus */
+.visit-banner { display: flex; align-items: center; justify-content: space-between; gap: 12px; background: var(--gold-soft); border: 1px solid var(--gold); border-radius: var(--radius); padding: 12px 14px; }
+.visit-start { margin-top: 4px; }
+.visit-start > summary { list-style: none; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; color: var(--accent); font-weight: 600; padding: 10px; }
+.visit-start > summary::-webkit-details-marker { display: none; }
+.visit-start .ask { margin: 6px 0 8px; }
+.visits { display: grid; gap: 10px; }
+.visit-card { display: flex; gap: 14px; align-items: center; padding: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; color: inherit; }
+.visit-card strong { font-family: var(--serif); font-size: 1.1rem; }
+.visit-card .thumbs { display: flex; flex: none; }
+.visit-card .thumbs img { width: 52px; height: 52px; object-fit: cover; border-radius: 8px; border: 2px solid var(--surface); background: var(--surface-2); }
+.visit-card .thumbs img + img { margin-left: -18px; }
+.summary h2 { display: flex; align-items: center; gap: 8px; }
+.summary h2 .ic { color: var(--gold); }
+
+/* Reiter in der Sammlung */
+.seg.tabs { display: flex; margin: 0 0 16px; }
+.seg.tabs a { flex: 1; text-align: center; text-decoration: none; border-radius: 999px; padding: 8px 10px; font-size: .92rem; font-weight: 600; color: var(--muted); }
+.seg.tabs a.on { background: var(--surface); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+
+/* Abzeichen */
+.badges { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.badge { display: flex; flex-direction: column; gap: 4px; padding: 14px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--line); opacity: .7; }
+.badge .emoji { font-size: 2rem; filter: grayscale(1); }
+.badge.done { opacity: 1; border-color: var(--gold); background: var(--gold-soft); }
+.badge.done .emoji { filter: none; }
+.badge .bar { height: 6px; border-radius: 3px; background: var(--surface-2); overflow: hidden; margin-top: 4px; }
+.badge .bar span { display: block; height: 100%; background: var(--gold); }

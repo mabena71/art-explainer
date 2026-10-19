@@ -33,3 +33,9 @@ export async function prepare(file) {
   const base64 = big.toDataURL('image/jpeg', 0.85).split(',')[1];
   return { blob, thumb, base64, ratio: big.width / big.height };
 }
+
+/** Für Fotos vom Server: Vorschaubild und Seitenverhältnis neu berechnen. */
+export async function thumbFromBlob(blob) {
+  const bmp = await loadBitmap(blob);
+  return { photo: blob, thumb: draw(bmp, 480).toDataURL('image/jpeg', 0.75), ratio: bmp.width / bmp.height };
+}

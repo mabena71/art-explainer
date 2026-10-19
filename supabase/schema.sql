@@ -42,6 +42,12 @@ create table if not exists public.art_scans (
   lat double precision,
   lng double precision
 );
+alter table public.art_scans add column if not exists visit jsonb;
+alter table public.art_scans add column if not exists synced_at timestamptz not null default now();
+create index if not exists art_scans_sync on public.art_scans (user_id, synced_at);
+create or replace function public.art_touch_synced_at() returns trigger language plpgsql as $$ begin new.synced_at = now(); return new; end $$;
+drop trigger if exists art_scans_synced on public.art_scans;
+create trigger art_scans_synced before insert or update on public.art_scans for each row execute function public.art_touch_synced_at();
 alter table public.art_scans enable row level security;
 drop policy if exists "art: eigene Scans" on public.art_scans;
 create policy "art: eigene Scans" on public.art_scans for all using (auth.uid() = user_id) with check (auth.uid() = user_id);

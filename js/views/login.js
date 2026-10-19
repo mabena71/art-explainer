@@ -27,7 +27,9 @@ export default async function login(el) {
     form.querySelector('button').disabled = true;
     try {
       state.session = await signIn(form.email.value.trim(), form.password.value);
+      // Neu laden, damit der Abgleich mit der Anmeldung startet
       location.hash = '#/';
+      location.reload();
     } catch (x) {
       err.innerHTML = esc(x.message || x);
       err.hidden = false;

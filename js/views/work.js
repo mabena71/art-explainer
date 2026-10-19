@@ -5,6 +5,7 @@ import * as voice from '../speak.js';
 import { prefs } from '../state.js';
 import { esc, paras, fmtDay, toast, linkCards, factList, fold, lengthSwitch, bindLength } from '../ui.js';
 import { icon } from '../icons.js';
+import { shareCard } from '../share.js';
 
 const SICHERHEIT = {
   hoch: '',
@@ -20,7 +21,8 @@ export default async function work(el, { args: [id] }) {
   const a = scan.analysis;
   const photoUrl = scan.photo ? URL.createObjectURL(scan.photo) : scan.thumb;
   const unsure = SICHERHEIT[a.sicherheit] || '';
-  const meta = [['Technik', a.technik], ['Standort', a.standort], ['Epoche', a.epoche], ['Entdeckt', fmtDay(scan.created_at)]].filter(([, v]) => v);
+  const meta = [['Technik', a.technik], ['Standort', a.standort], ['Epoche', a.epoche], ['Entdeckt', fmtDay(scan.created_at)]].filter(([, v]) => v).map(([k, v]) => [k, esc(v)]);
+  if (scan.visit?.id) meta.push(['Besuch', `<a href="#/besuch/${esc(scan.visit.id)}">${esc(scan.visit.name)}</a>`]);
 
   el.innerHTML = `
     <div class="work">
@@ -37,6 +39,7 @@ export default async function work(el, { args: [id] }) {
         <div class="row actions">
           ${voice.supported() ? `<button class="btn btn-small" data-read>${icon('play')}<span>Vorlesen</span></button>` : ''}
           <button class="btn btn-small btn-ghost ${scan.fav ? 'on' : ''}" data-fav aria-pressed="${scan.fav}">${icon('star')}<span>Favorit</span></button>
+          <button class="btn btn-small btn-ghost" data-share>${icon('share')}<span>Teilen</span></button>
         </div>
         ${lengthSwitch()}
       </header>
@@ -79,7 +82,7 @@ export default async function work(el, { args: [id] }) {
       </section>
 
       <section><h2>Angaben</h2>
-        <dl class="meta">${meta.map(([k, v]) => `<dt>${k}</dt><dd>${esc(v)}</dd>`).join('')}</dl>
+        <dl class="meta">${meta.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('')}</dl>
         <label class="field"><span>Meine Notiz</span><textarea data-note rows="3" placeholder="z. B. mit wem, wo, was mir gefiel">${esc(scan.note)}</textarea></label>
         <button class="btn btn-ghost btn-danger" data-delete>${icon('trash')}<span>Aus der Sammlung löschen</span></button>
       </section>
@@ -107,6 +110,18 @@ export default async function work(el, { args: [id] }) {
       : [a.titel, a.kurz, a.ueberblick, 'Die Geschichte dahinter.', a.geschichte].join('\n\n');
     readBtn.innerHTML = `${icon('stop')}<span>Stopp</span>`;
     voice.speak(text, () => { readBtn.innerHTML = `${icon('play')}<span>Vorlesen</span>`; });
+  };
+
+  // Teilen als Bildkarte
+  el.querySelector('[data-share]').onclick = async e => {
+    const b = e.currentTarget;
+    b.disabled = true;
+    try {
+      const r = await shareCard(scan);
+      if (r === 'downloaded') toast('Bildkarte gespeichert');
+    } catch (x) {
+      toast(x.message || String(x), 'bad');
+    } finally { b.disabled = false; }
   };
 
   // Favorit, Notiz, Löschen

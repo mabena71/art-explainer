@@ -24,6 +24,6 @@ export async function explore(art, titel, kontext) {
 }
 
 export async function chat(werk, verlauf, frage) {
-  if (state.demo) { await wait(1000); return demoChat(frage); }
+  if (state.demo) { await wait(1000); return demoChat(frage, werk); }
   return callArt({ action: 'chat', werk, verlauf, frage });
 }
