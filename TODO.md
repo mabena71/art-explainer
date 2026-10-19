@@ -11,7 +11,7 @@ Plan: Foto von Bild oder Skulptur → Erkennung durch Claude → Erklärung, ver
 | 25 | Abgleich testen | Angemeldet einen Scan machen, dann auf dem zweiten Gerät (Handy/PC) unter Sammlung prüfen, ob er erscheint (Foto, Texte, Favorit, Löschen) | Maurice | — | 5 | hoch | offen | — |
 | 6 | Testscans im Museum | Sternennacht, Rodins Denker, Werk im Kunsthaus Zürich, unbekanntes Bild; Erkennung, Unsicherheit, Details-Punkte prüfen | Maurice | — | 30 | hoch | offen | — |
 | 8 | Audioguide mit ElevenLabs | Hörprobe 2–3 Stimmen, Kostenfreigabe, Function `speak` mit Zwischenspeicher (jetzt: Browser-Stimme) | Claude + Maurice | Opus | 60 | mittel | offen | — |
-| 9 | Design-Etappe | Farben, Logo/Symbol mit Maurice festlegen (Name steht: Art Explainer) | Maurice + Claude | Opus | 30 | mittel | offen | 1 |
+| 9 | Design-Etappe | Farben, Logo/Symbol mit Maurice festlegen (Name steht: Art Explainer) | Maurice + Claude | Opus | 30 | mittel | offen | — |
 | 18 | Geschmacksprofil + Ausstellungstipps | Vorlieben aus der Sammlung, aktuelle Ausstellungen Schweiz (Claude mit Web-Suche) | Claude | Opus | 60 | niedrig | Idee | — |
 | 20 | Familien-Feed | Freiwillig geteilte Scans der Familie sehen | Claude | Opus | 60 | niedrig | Idee | 25 |
 | 21 | Öffentlich machen | Registrierung, Limits, Kostenschutz, Datenschutz-Text | Claude + Maurice | Opus | 120 | niedrig | Idee | — |
