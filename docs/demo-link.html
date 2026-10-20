@@ -1,0 +1,50 @@
+<title>Art Explainer Demo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600&display=swap">
+<style>
+  /* Layout: eine ruhige Karte mit zwei Knöpfen, Farben wie in der App («Espresso und Terrakotta») */
+  :root {
+    --bg: #f2ebdd; --surface: #fbf7ee; --text: #2b2218; --muted: #6a5d4c; --line: #dacfb8;
+    --accent: #a9532d; --accent-ink: #ffffff; --demo: #f5c542; --demo-ink: #2b2218;
+    --display: "Fraunces", Georgia, serif; --body: "Inter", -apple-system, "Segoe UI", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+    --bg: #16110d; --surface: #211a14; --text: #f2ebdd; --muted: #b3a794; --line: #3a2f24;
+    --accent: #d98558; --accent-ink: #16110d; --demo: #f0c874; --demo-ink: #16110d; color-scheme: dark; } }
+  :root[data-theme="dark"] {
+    --bg: #16110d; --surface: #211a14; --text: #f2ebdd; --muted: #b3a794; --line: #3a2f24;
+    --accent: #d98558; --accent-ink: #16110d; --demo: #f0c874; --demo-ink: #16110d; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--body); font-size: 15px; line-height: 1.5; }
+  .page { max-width: 520px; margin: 0 auto; padding-block: 40px 56px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+    display: flex; flex-direction: column; gap: 20px; }
+  .kicker { font-size: 11px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin: 0; }
+  h1 { font-family: var(--display); font-weight: 600; font-size: clamp(28px, 6vw, 36px); line-height: 1.15; margin: 0; text-wrap: balance; }
+  p { margin: 0; color: var(--muted); }
+  .links { display: flex; flex-direction: column; gap: 12px; }
+  .links a { display: flex; flex-direction: column; gap: 2px; padding: 16px 20px; border-radius: 14px; text-decoration: none; border: 1px solid var(--line); background: var(--surface); color: var(--text); }
+  .links a b { font-size: 17px; }
+  .links a span { font-size: 13px; color: var(--muted); }
+  .links a.demo { background: var(--demo); border-color: var(--demo); color: var(--demo-ink); }
+  .links a.demo span { color: var(--demo-ink); opacity: .8; }
+  .links a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .url { font-size: 12.5px; word-break: break-all; }
+</style>
+
+<div class="page">
+  <p class="kicker">Art Explainer</p>
+  <h1>Demo und App öffnen</h1>
+  <p>Die Demo zeigt alles ohne Anmeldung und ohne Kosten: Jedes Foto wird als «Sternennacht» erkannt, nichts wird gespeichert. Sie gilt für einen Aufruf.</p>
+  <div class="links">
+    <a class="demo" href="https://mabena71.github.io/art-explainer/?demo" target="_blank" rel="noopener">
+      <b>Demo-Version öffnen ↗</b>
+      <span>Gelber Balken oben = Demo-Modus</span>
+    </a>
+    <a href="https://mabena71.github.io/art-explainer/" target="_blank" rel="noopener">
+      <b>Echte App öffnen ↗</b>
+      <span>Mit deinem BENA-Fit-Konto anmelden, ohne gelben Balken</span>
+    </a>
+  </div>
+  <p class="url">Demo: https://mabena71.github.io/art-explainer/?demo</p>
+</div>
