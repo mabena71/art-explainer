@@ -1,7 +1,7 @@
 # TODO – Art Explainer
 
 App: https://mabena71.github.io/art-explainer/ · Demo (nur für einen Aufruf): `?demo` · Repo: https://github.com/mabena71/art-explainer · Übergabe: [CLAUDE.md](CLAUDE.md)
-Neue Nummern fortlaufend (zuletzt 34) · Aufwand = Schätzung in Minuten · Modell = empfohlenes Claude-Modell (Opus = knifflig, Sonnet = Routine, Haiku = Kleinigkeiten, – = Aufgabe von Maurice)
+Neue Nummern fortlaufend (zuletzt 35) · Aufwand = Schätzung in Minuten · Modell = empfohlenes Claude-Modell (Opus = knifflig, Sonnet = Routine, Haiku = Kleinigkeiten, – = Aufgabe von Maurice)
 
 ## Offene Punkte
 
@@ -17,6 +17,7 @@ Neue Nummern fortlaufend (zuletzt 34) · Aufwand = Schätzung in Minuten · Mode
 | 34 | 2 | Erfolge pro Kunstrichtung | Abzeichen je Stilrichtung (z. B. erstes impressionistisches Werk, 5 Barock-Werke), sichtbar im Reiter «Erfolge» und bei der Richtung in der Sammlung | Claude | Sonnet | 45 | mittel | Idee (Maurice 20.10.) | 33 |
 | 18 | 2 | Geschmacksprofil + Ausstellungstipps | Vorlieben aus der Sammlung, aktuelle Ausstellungen in Museen in der Nähe (Claude mit Web-Suche); braucht neue Function-Version (Maurice fügt Code ein) | Claude | Sonnet | 60 | niedrig | Idee | – |
 | 20 | 2 | Familien-Feed | Freiwillig geteilte Scans der Familie sehen | Claude | Sonnet | 60 | niedrig | Idee | 25 |
+| 35 | 3 | Mehrsprachigkeit | App-Texte und Claude-Antworten in Deutsch, Englisch, Französisch, Italienisch (Sprache unter «Mehr» wählbar, Vorgabe aus dem Browser); Texte der App in eine Übersetzungsdatei auslagern, Function bekommt die Sprache mit (Maurice fügt Code ein); Vorlese-Stimme passend zur Sprache | Claude | Sonnet | 120 | mittel | Idee (Maurice 20.10.) | – |
 | 21 | 3 | Öffentlich machen | Registrierung, Limits, Kostenschutz, Datenschutz-Text, Impressum | Maurice + Claude | Opus | 120 | niedrig | später | 23 |
 | 23 | 3 | Eigenes Supabase-Projekt | Läuft vorerst in bena-fit mit (Tabellen `art_…`, Function-Slug `smooth-api`). Für «öffentlich» umziehen | Maurice + Claude | Opus | 45 | niedrig | später | – |
 | 22 | 4 | Anthropic-Schlüssel erneuern | Schlüssel «art-explainer» läuft am 31.12.2027 ab; neuen erzeugen und Secret `ANTHROPIC_API_KEY` in bena-fit ersetzen | Maurice | – | 10 | niedrig | später | – |
