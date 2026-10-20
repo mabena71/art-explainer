@@ -10,9 +10,7 @@ Neue Nummern fortlaufend (zuletzt 31) · Aufwand = Schätzung in Minuten · Mode
 | 25 | 1 | Abgleich testen | Angemeldet (ohne gelben Demo-Balken) einen Scan machen, dann auf dem zweiten Gerät (Handy/PC) unter Sammlung prüfen, ob er erscheint (Foto, Texte, Favorit, Löschen). Echte Aufrufe prüft die Leitstelle mit SQL auf `art_usage`/`art_scans` | Maurice | – | 5 | hoch | offen | – |
 | 24 | 1 | Installation auf Xiaomi/Poco | Chrome meldet «bereits installiert», öffnen schlägt fehl, kein Symbol; Berechtigung «Startbildschirm-Verknüpfungen» bei HyperOS nicht einstellbar. Zwischenlösung: Lesezeichen. Nächstes: Neustart, «Verknüpfung erstellen», sonst Ursache suchen (WebAPK) | Maurice + Claude | Sonnet | 20 | hoch | offen | – |
 | 6 | 1 | Testscans im Museum | Sternennacht, Rodins Denker, Werk im Kunsthaus Zürich, unbekanntes Bild; Erkennung, Unsicherheit, Details-Punkte, Museums-Modus, Rundgang-Tipp, Museen in der Nähe prüfen | Maurice | – | 60 | hoch | offen | 25 |
-| 29 | 1 | Beschriftung «Foto vom Handy» | Startseite: «Aus der Galerie wählen» heisst neu «Foto vom Handy wählen» (Verwechslung mit Museumsgalerie) | Claude | Haiku | 5 | mittel | offen | 9 |
-| 30 | 2 | Museum aus der Nähe wählen | Beim «Museumsbesuch starten» die nächsten Museen aus «Museen in der Nähe» (Overpass, nur nach Standort-Einwilligung) als Vorschläge zeigen, Tippen bleibt möglich | Claude | Sonnet | 30 | mittel | offen | 9 |
-| 31 | 2 | Museum hilft bei Erkennung | Läuft ein Besuch, schickt der Scan den Museumsnamen mit; die Function nimmt ihn als Hinweis in `analyze` (Werke dieser Sammlung zuerst prüfen, ohne Erkennung zu erzwingen). Neue Function-Version: Maurice fügt Code ein, danach Slug prüfen | Maurice + Claude | Sonnet | 30 | mittel | offen | 30 |
+| 31 | 2 | Museum hilft bei Erkennung | Läuft ein Besuch, schickt der Scan den Museumsnamen mit; die Function nimmt ihn als Hinweis in `analyze` (Werke dieser Sammlung zuerst prüfen, ohne Erkennung zu erzwingen). Neue Function-Version: Maurice fügt Code ein, danach Slug prüfen | Maurice + Claude | Sonnet | 30 | mittel | App fertig (2026.10.20-2), Function bereitstellen durch Maurice | – |
 | 8 | 2 | Audioguide mit ElevenLabs | Hörprobe 2–3 Stimmen, Kostenfreigabe, Function-Aktion `speak` mit Zwischenspeicher (heute: Browser-Stimme) | Maurice + Claude | Sonnet | 60 | mittel | offen | – |
 | 18 | 2 | Geschmacksprofil + Ausstellungstipps | Vorlieben aus der Sammlung, aktuelle Ausstellungen in Museen in der Nähe (Claude mit Web-Suche); braucht neue Function-Version (Maurice fügt Code ein) | Claude | Sonnet | 60 | niedrig | Idee | – |
 | 20 | 2 | Familien-Feed | Freiwillig geteilte Scans der Familie sehen | Claude | Sonnet | 60 | niedrig | Idee | 25 |
@@ -24,6 +22,8 @@ Neue Nummern fortlaufend (zuletzt 31) · Aufwand = Schätzung in Minuten · Mode
 
 | Nr | Thema | Details | Erledigt am |
 |---|---|---|---|
+| 30 | Museum aus der Nähe wählen | Beim «Museumsbesuch starten» Knopf «Museen in meiner Nähe vorschlagen» (Overpass, Standort erst nach Tipp), bis 6 Vorschläge als Chips, Tippen füllt den Namen; Fehler fallen still aufs Textfeld zurück. Version 2026.10.20-2 | 20.10.2026 |
+| 29 | Beschriftung «Foto vom Handy» | «Aus der Galerie wählen» heisst jetzt «Foto vom Handy wählen». Version 2026.10.20-2 | 20.10.2026 |
 | 9 | Design-Etappe | Farbwelt «Espresso und Terrakotta» (hell: warmes Papier, dunkel: Espresso; Akzent Terrakotta, Gold), neues App-Symbol Bogen mit Goldsonne (`scripts/make-icons.py`), theme-color hell/dunkel, Teilen-Karte angepasst. Version 2026.10.20-1 | 20.10.2026 |
 | 28 | Übergabe an Leitstelle | `CLAUDE.md` als Übergabe, Leitstelle + Untersitzungen eingeführt, To-do-Format von Roundabout Hunter übernommen | 20.10.2026 |
 | 26 | Demo-Falle entschärft | `?demo` gilt nur noch einmalig (neuer Schlüssel `kunst.modus`), Demo-Balken knallgelb und antippbar zur Anmeldung | 19.10.2026 |
@@ -46,7 +46,7 @@ Neue Nummern fortlaufend (zuletzt 31) · Aufwand = Schätzung in Minuten · Mode
 
 1. Nr. 25 Abgleich testen, Nr. 24 Xiaomi-Installation lösen
 2. Nr. 6 Testscans im Museum, Fehler beheben
-3. Nr. 29–31 (Beschriftung, Museum aus der Nähe, Museum hilft bei Erkennung), Nr. 8 Audioguide
+3. Nr. 31 Function bereitstellen (Maurice), Nr. 8 Audioguide
 4. Später: Nr. 18, 20, dann Veröffentlichung (Nr. 23, 21)
 
 ## Kosten (ohne Claude-Abo)
