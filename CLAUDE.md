@@ -61,5 +61,8 @@ Quiz, Vergleichen, Teilen als Bildkarte, Kunst-Karte mit «Museen in meiner Näh
 - Neue Nummern fortlaufend; die zuletzt vergebene steht oben in der Datei.
 - Maurice liest die Liste lieber als Seite: Artifact «To-do Art Explainer» https://claude.ai/artifact/6JafvntrsXXswuef7JRF4m, Quelle `docs/todo-uebersicht.html`
   (Gruppen: Läuft gerade, Deine Aufgaben, Als Nächstes, Später, Phasen, Erledigt, Kosten; mit Minuten und grob geschätzten Tokens).
-  Bei jeder Änderung an TODO.md von Hand nachführen und dieselbe Datei neu veröffentlichen (aus anderer Sitzung mit `url`).
+  **Grundregel (Maurice, 20.10.2026): Die Seite ist immer aktuell.** Jede Änderung an TODO.md (neue Aufgabe, Start einer Untersitzung,
+  Abschluss, Statuswechsel, Version) im selben Schritt auf der Seite nachführen und sofort neu veröffentlichen, nicht erst später.
+  Status eindeutig formulieren: Was ist erledigt, was ist offen und wer ist dran (kein blosses «fertig», wenn noch ein Schritt fehlt).
+  Neu veröffentlichen: dieselbe Datei (aus anderer Sitzung mit `url`).
   «Tokens bisher» oben rechts mit `python scripts/tokens_zaehlen.py` neu messen.
