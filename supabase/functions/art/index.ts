@@ -1,5 +1,5 @@
 // Edge Function "art": alle KI-Aufrufe der App an einer Stelle.
-// POST { action: 'analyze', image: <base64 JPEG>, kids?: boolean }  → Analyse des Werks (JSON)
+// POST { action: 'analyze', image: <base64 JPEG>, museum?: string (Name des Museums bei laufendem Besuch), kids?: boolean }  → Analyse des Werks (JSON)
 // POST { action: 'explore', art, titel, kontext? }                   → Kurzartikel zu einem Querverweis (JSON)
 // POST { action: 'chat', werk: <Analyse>, verlauf: [{role, text}], frage } → Antwort als Text
 // Nur mit Login der App. "Verify JWT" darf eingeschaltet bleiben.
@@ -118,6 +118,11 @@ async function ask(params: Record<string, unknown>) {
 async function analyze(body: Record<string, unknown>) {
   const image = String(body.image || '');
   if (!image || image.length > 7_000_000) throw Object.assign(new Error('Kein oder zu grosses Bild.'), { status: 400 });
+  // Optional: Name des Museums, in dem die Person gerade ist (nur als Hinweis, nie als Vorgabe)
+  const museum = String(body.museum || '').replace(/[\r\n"«»]+/g, ' ').trim().slice(0, 80);
+  const hinweis = museum
+    ? `\nHinweis: Die Person befindet sich gerade im Museum «${museum}». Prüfe zuerst, ob das Werk zur Sammlung dieses Museums passt, und nutze das als Anhaltspunkt. Erzwinge aber nichts: Passt das Foto nicht dazu (z. B. Leihgabe, Sonderausstellung, anderes Werk), ignoriere den Hinweis. Ist die Zuordnung unsicher, sag das ehrlich.`
+    : '';
   const text = await ask({
     max_tokens: 16000,
     output_config: { effort: 'medium', format: { type: 'json_schema', schema: ANALYSE_SCHEMA } },
@@ -125,7 +130,7 @@ async function analyze(body: Record<string, unknown>) {
 Erkenne das Werk, wenn möglich, und erzähle so, dass man es danach mit anderen Augen sieht.
 Ist das Werk nicht sicher bestimmbar, sag das ehrlich (erkannt=false oder sicherheit niedrig) und analysiere trotzdem Stil, Motiv, mögliche Einflüsse und Epoche.
 Bei «details» beziehst du dich auf das, was auf diesem Foto tatsächlich zu sehen ist, mit möglichst genauen Positionen.
-${STIL}`,
+${STIL}${hinweis}`,
     messages: [{
       role: 'user',
       content: [

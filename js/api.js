@@ -6,9 +6,9 @@ import * as db from './db.js';
 
 const wait = ms => new Promise(r => setTimeout(r, ms));
 
-export async function analyze(base64) {
+export async function analyze(base64, museum = '') {
   if (state.demo) { await wait(2500); return structuredClone(DEMO_ANALYSIS); }
-  return callArt({ action: 'analyze', image: base64 });
+  return callArt({ action: 'analyze', image: base64, ...(museum ? { museum } : {}) });
 }
 
 /** Stöber-Artikel; jeder wird nur einmal erstellt und dann auf dem Gerät gespeichert. */

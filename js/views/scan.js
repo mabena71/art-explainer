@@ -1,4 +1,4 @@
-// Startseite: Kunstwerk fotografieren oder aus der Galerie wählen, dann analysieren lassen.
+// Startseite: Kunstwerk fotografieren oder ein Foto vom Handy wählen, dann analysieren lassen.
 // Läuft ein Museumsbesuch, werden neue Scans ihm zugeordnet.
 import * as db from '../db.js';
 import { analyze } from '../api.js';
@@ -9,6 +9,7 @@ import { currentPosition } from './map.js';
 import * as api from '../api.js';
 import { esc, uid, loadingText, toast, paras } from '../ui.js';
 import { icon } from '../icons.js';
+import { findMuseums, locateOnce } from '../nearby.js';
 
 const LOADING = [
   'Schaue genau hin …',
@@ -40,7 +41,7 @@ export default async function scan(el) {
         <input type="file" accept="image/*" capture="environment" hidden data-pick>
       </label>
       <label class="btn btn-ghost">
-        ${icon('image')}<span>Aus der Galerie wählen</span>
+        ${icon('image')}<span>Foto vom Handy wählen</span>
         <input type="file" accept="image/*" hidden data-pick>
       </label>
       ${v ? '' : `
@@ -50,6 +51,8 @@ export default async function scan(el) {
           <input name="name" placeholder="Wo bist du? z. B. Kunsthaus Zürich" maxlength="80" autocomplete="off">
           <button class="btn">Los</button>
         </form>
+        <button type="button" class="btn btn-small btn-ghost" data-near>${icon('pin')}<span>Museen in meiner Nähe vorschlagen</span></button>
+        <div class="chips" data-nearlist hidden></div>
         <p class="muted small">Alle Werke, die du jetzt scannst, landen gemeinsam im Besuch. Am Schluss gibt es eine Zusammenfassung mit deinen Highlights.</p>
       </details>`}
       <p class="muted small tip">Tipp: Möglichst gerade und ganz aufs Werk, ohne Spiegelung. Ein Foto vom Schild daneben hilft auch.</p>
@@ -73,6 +76,28 @@ export default async function scan(el) {
     const started = visit.startVisit(e.target.name.value);
     toast(`Besuch «${started.name}» gestartet`);
     scan(el);
+  });
+  // Museen in der Nähe als Vorschläge; Standort erst nach Tipp auf den Knopf, Fehler bleiben still
+  el.querySelector('[data-near]')?.addEventListener('click', async e => {
+    const b = e.currentTarget, list = el.querySelector('[data-nearlist]'), input = el.querySelector('[data-visit] input[name=name]');
+    b.disabled = true;
+    b.querySelector('span').textContent = 'Suche …';
+    try {
+      const found = (await findMuseums(await locateOnce(), 5)).slice(0, 6);
+      if (!found.length) throw new Error('keine');
+      list.innerHTML = found.map((m, i) => `<button type="button" class="chip" data-i="${i}">${icon('museum')}<span>${esc(m.name)}</span></button>`).join('');
+      list.hidden = false;
+      b.hidden = true;
+      list.onclick = ev => {
+        const c = ev.target.closest('[data-i]');
+        if (!c) return;
+        input.value = found[c.dataset.i].name;
+        list.querySelectorAll('.chip').forEach(x => x.classList.toggle('on', x === c));
+      };
+    } catch (x) {
+      console.warn('Museen in der Nähe:', x);
+      b.hidden = true; // still zurück auf das Textfeld
+    }
   });
   // Rundgang-Tipp: was im gleichen Museum als Nächstes passen könnte
   el.querySelector('[data-tip]')?.addEventListener('click', async e => {
@@ -109,7 +134,7 @@ export default async function scan(el) {
       busy.querySelector('img').src = photo.thumb;
       stopText = loadingText(busy.querySelector('.busy-text'), LOADING);
       const where = currentPosition(); // läuft parallel zur Analyse
-      const analysis = await analyze(photo.base64);
+      const analysis = await analyze(photo.base64, visit.active()?.name || '');
       const pos = await where;
       const id = uid();
       const current = visit.active();
